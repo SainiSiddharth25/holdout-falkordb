@@ -1,0 +1,436 @@
+{
+  "kind": "synthetic captured-fixture evidence-tool ablation",
+  "created_at": "2026-10-18T13:15:38.228679+00:00",
+  "fixture": "fixtures/demo/dataset.json",
+  "fixed_controls": [
+    "Identical initial candidate graph, record content and predeclared costs.",
+    "Identical protected-record policy and conservative release requirement.",
+    "Native FalkorDB algo.maxFlow for both lower and upper bounds.",
+    "Same evidence assessors and revision-bound production service.",
+    "Each strategy starts in its own runtime with a fresh UUID release graph.",
+    "All investigation and staging actions use real MCP; no model provider is called."
+  ],
+  "metric_definitions": {
+    "lower_cost": "Optimal exclusion cost over confirmed conflicts only.",
+    "upper_cost": "Optimal exclusion cost over confirmed plus unresolved conflicts; used for release export.",
+    "kept_count": "Number of records retained by the conservative optimal repair.",
+    "candidate_investigation_calls": "Actual calls to investigate_candidate; auto can invoke several evidence methods.",
+    "inspection_events": "Count of emitted investigate_candidate audit events, one per actual evidence-method attempt.",
+    "elapsed_seconds": "Single-run strategy and staging time after native service startup, reported descriptively rather than as a performance claim."
+  },
+  "limitations": [
+    "This is a deliberately constructed synthetic fixture with eight captured hypotheses, not an estimate of field detection precision or recall.",
+    "The full run uses a fixed deterministic investigation policy; no LLM capability or adaptive model benefit is measured.",
+    "Exact and AST mismatches remain unresolved rather than being treated as clean.",
+    "Confirmed-only lower bounds can increase when new conflicts are established; conservative costs decrease only when supported rejections remove candidate constraints.",
+    "The known versus conservative gap may remain because unresolved relationships are explicitly retained.",
+    "A lower exclusion cost is measured against fixed declared costs, not against model evaluation scores or independently demonstrated data value.",
+    "The ablation measures the contribution of the available evidence methods on this fixture; it does not establish FalkorDB performance superiority or complete contamination detection."
+  ],
+  "results": [
+    {
+      "strategy": "no_investigation",
+      "fixture_catalog_sha256": "db8bd161cbb24660ae3ecc9c41efbc546bad14e1c8f183161bf0a36039ac1d7f",
+      "input_records": 14,
+      "input_candidates": 8,
+      "module_version": "6.0.1",
+      "solver": "falkordb-native-maxflow",
+      "lower_cost": 0,
+      "upper_cost": 27,
+      "gap": 27,
+      "counts": {
+        "confirmed": 0,
+        "rejected": 0,
+        "unresolved": 8
+      },
+      "kept_count": 7,
+      "kept_by_split": {
+        "train": 3,
+        "eval": 4
+      },
+      "excluded": [
+        "e202",
+        "e206",
+        "t101",
+        "t103",
+        "t104",
+        "t105",
+        "t107"
+      ],
+      "candidate_investigation_calls": 0,
+      "inspection_events": 0,
+      "inspection_events_by_method": {},
+      "elapsed_seconds": 0.047511,
+      "release_verified": true,
+      "candidate_verdicts": [
+        {
+          "id": "c401",
+          "status": "unresolved",
+          "final_method": null
+        },
+        {
+          "id": "c402",
+          "status": "unresolved",
+          "final_method": null
+        },
+        {
+          "id": "c403",
+          "status": "unresolved",
+          "final_method": null
+        },
+        {
+          "id": "c404",
+          "status": "unresolved",
+          "final_method": null
+        },
+        {
+          "id": "c405",
+          "status": "unresolved",
+          "final_method": null
+        },
+        {
+          "id": "c406",
+          "status": "unresolved",
+          "final_method": null
+        },
+        {
+          "id": "c407",
+          "status": "unresolved",
+          "final_method": null
+        },
+        {
+          "id": "c408",
+          "status": "unresolved",
+          "final_method": null
+        }
+      ],
+      "blanket_policies": {
+        "train": {
+          "policy": "Exclude every train endpoint of an active conservative conflict.",
+          "feasible": false,
+          "cost": null,
+          "excluded": [],
+          "protected_obstruction": [
+            "t106"
+          ],
+          "note": "An infeasible blanket policy has no comparable valid cost; it is not counted as a repair."
+        },
+        "eval": {
+          "policy": "Exclude every eval endpoint of an active conservative conflict.",
+          "feasible": false,
+          "cost": null,
+          "excluded": [],
+          "protected_obstruction": [
+            "e203"
+          ],
+          "note": "An infeasible blanket policy has no comparable valid cost; it is not counted as a repair."
+        }
+      }
+    },
+    {
+      "strategy": "exact_only",
+      "fixture_catalog_sha256": "db8bd161cbb24660ae3ecc9c41efbc546bad14e1c8f183161bf0a36039ac1d7f",
+      "input_records": 14,
+      "input_candidates": 8,
+      "module_version": "6.0.1",
+      "solver": "falkordb-native-maxflow",
+      "lower_cost": 6,
+      "upper_cost": 27,
+      "gap": 21,
+      "counts": {
+        "confirmed": 3,
+        "rejected": 0,
+        "unresolved": 5
+      },
+      "kept_count": 7,
+      "kept_by_split": {
+        "train": 3,
+        "eval": 4
+      },
+      "excluded": [
+        "e202",
+        "e206",
+        "t101",
+        "t103",
+        "t104",
+        "t105",
+        "t107"
+      ],
+      "candidate_investigation_calls": 8,
+      "inspection_events": 8,
+      "inspection_events_by_method": {
+        "exact": 8
+      },
+      "elapsed_seconds": 0.122075,
+      "release_verified": true,
+      "candidate_verdicts": [
+        {
+          "id": "c401",
+          "status": "confirmed",
+          "final_method": "exact"
+        },
+        {
+          "id": "c402",
+          "status": "confirmed",
+          "final_method": "exact"
+        },
+        {
+          "id": "c403",
+          "status": "unresolved",
+          "final_method": "exact"
+        },
+        {
+          "id": "c404",
+          "status": "unresolved",
+          "final_method": "exact"
+        },
+        {
+          "id": "c405",
+          "status": "unresolved",
+          "final_method": "exact"
+        },
+        {
+          "id": "c406",
+          "status": "unresolved",
+          "final_method": "exact"
+        },
+        {
+          "id": "c407",
+          "status": "confirmed",
+          "final_method": "exact"
+        },
+        {
+          "id": "c408",
+          "status": "unresolved",
+          "final_method": "exact"
+        }
+      ],
+      "blanket_policies": {
+        "train": {
+          "policy": "Exclude every train endpoint of an active conservative conflict.",
+          "feasible": false,
+          "cost": null,
+          "excluded": [],
+          "protected_obstruction": [
+            "t106"
+          ],
+          "note": "An infeasible blanket policy has no comparable valid cost; it is not counted as a repair."
+        },
+        "eval": {
+          "policy": "Exclude every eval endpoint of an active conservative conflict.",
+          "feasible": false,
+          "cost": null,
+          "excluded": [],
+          "protected_obstruction": [
+            "e203"
+          ],
+          "note": "An infeasible blanket policy has no comparable valid cost; it is not counted as a repair."
+        }
+      }
+    },
+    {
+      "strategy": "exact_then_ast",
+      "fixture_catalog_sha256": "db8bd161cbb24660ae3ecc9c41efbc546bad14e1c8f183161bf0a36039ac1d7f",
+      "input_records": 14,
+      "input_candidates": 8,
+      "module_version": "6.0.1",
+      "solver": "falkordb-native-maxflow",
+      "lower_cost": 7,
+      "upper_cost": 27,
+      "gap": 20,
+      "counts": {
+        "confirmed": 4,
+        "rejected": 0,
+        "unresolved": 4
+      },
+      "kept_count": 7,
+      "kept_by_split": {
+        "train": 3,
+        "eval": 4
+      },
+      "excluded": [
+        "e202",
+        "e206",
+        "t101",
+        "t103",
+        "t104",
+        "t105",
+        "t107"
+      ],
+      "candidate_investigation_calls": 13,
+      "inspection_events": 13,
+      "inspection_events_by_method": {
+        "exact": 8,
+        "normalized_ast": 5
+      },
+      "elapsed_seconds": 0.267159,
+      "release_verified": true,
+      "candidate_verdicts": [
+        {
+          "id": "c401",
+          "status": "confirmed",
+          "final_method": "exact"
+        },
+        {
+          "id": "c402",
+          "status": "confirmed",
+          "final_method": "exact"
+        },
+        {
+          "id": "c403",
+          "status": "confirmed",
+          "final_method": "normalized_ast"
+        },
+        {
+          "id": "c404",
+          "status": "unresolved",
+          "final_method": "normalized_ast"
+        },
+        {
+          "id": "c405",
+          "status": "unresolved",
+          "final_method": "normalized_ast"
+        },
+        {
+          "id": "c406",
+          "status": "unresolved",
+          "final_method": "normalized_ast"
+        },
+        {
+          "id": "c407",
+          "status": "confirmed",
+          "final_method": "exact"
+        },
+        {
+          "id": "c408",
+          "status": "unresolved",
+          "final_method": "normalized_ast"
+        }
+      ],
+      "blanket_policies": {
+        "train": {
+          "policy": "Exclude every train endpoint of an active conservative conflict.",
+          "feasible": false,
+          "cost": null,
+          "excluded": [],
+          "protected_obstruction": [
+            "t106"
+          ],
+          "note": "An infeasible blanket policy has no comparable valid cost; it is not counted as a repair."
+        },
+        "eval": {
+          "policy": "Exclude every eval endpoint of an active conservative conflict.",
+          "feasible": false,
+          "cost": null,
+          "excluded": [],
+          "protected_obstruction": [
+            "e203"
+          ],
+          "note": "An infeasible blanket policy has no comparable valid cost; it is not counted as a repair."
+        }
+      }
+    },
+    {
+      "strategy": "full_deterministic_mcp",
+      "fixture_catalog_sha256": "db8bd161cbb24660ae3ecc9c41efbc546bad14e1c8f183161bf0a36039ac1d7f",
+      "input_records": 14,
+      "input_candidates": 8,
+      "module_version": "6.0.1",
+      "solver": "falkordb-native-maxflow",
+      "lower_cost": 10,
+      "upper_cost": 22,
+      "gap": 12,
+      "counts": {
+        "confirmed": 5,
+        "rejected": 1,
+        "unresolved": 2
+      },
+      "kept_count": 8,
+      "kept_by_split": {
+        "train": 4,
+        "eval": 4
+      },
+      "excluded": [
+        "e202",
+        "e206",
+        "t101",
+        "t103",
+        "t105",
+        "t107"
+      ],
+      "candidate_investigation_calls": 8,
+      "inspection_events": 17,
+      "inspection_events_by_method": {
+        "exact": 8,
+        "normalized_ast": 5,
+        "provenance": 4
+      },
+      "elapsed_seconds": 0.499889,
+      "release_verified": true,
+      "candidate_verdicts": [
+        {
+          "id": "c401",
+          "status": "confirmed",
+          "final_method": "exact"
+        },
+        {
+          "id": "c402",
+          "status": "confirmed",
+          "final_method": "exact"
+        },
+        {
+          "id": "c403",
+          "status": "confirmed",
+          "final_method": "normalized_ast"
+        },
+        {
+          "id": "c404",
+          "status": "confirmed",
+          "final_method": "provenance"
+        },
+        {
+          "id": "c405",
+          "status": "rejected",
+          "final_method": "provenance"
+        },
+        {
+          "id": "c406",
+          "status": "unresolved",
+          "final_method": "provenance"
+        },
+        {
+          "id": "c407",
+          "status": "confirmed",
+          "final_method": "exact"
+        },
+        {
+          "id": "c408",
+          "status": "unresolved",
+          "final_method": "provenance"
+        }
+      ],
+      "blanket_policies": {
+        "train": {
+          "policy": "Exclude every train endpoint of an active conservative conflict.",
+          "feasible": false,
+          "cost": null,
+          "excluded": [],
+          "protected_obstruction": [
+            "t106"
+          ],
+          "note": "An infeasible blanket policy has no comparable valid cost; it is not counted as a repair."
+        },
+        "eval": {
+          "policy": "Exclude every eval endpoint of an active conservative conflict.",
+          "feasible": false,
+          "cost": null,
+          "excluded": [],
+          "protected_obstruction": [
+            "e203"
+          ],
+          "note": "An infeasible blanket policy has no comparable valid cost; it is not counted as a repair."
+        }
+      }
+    }
+  ]
+}

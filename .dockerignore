@@ -1,0 +1,9 @@
+.git
+.venv
+.runtime
+.pytest_cache
+**/__pycache__
+.env
+.env.*
+dist/demo-run.json
+*.zip

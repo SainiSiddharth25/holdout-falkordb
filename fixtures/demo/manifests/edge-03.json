@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "source_id": "e203",
+  "target_id": "source-83",
+  "relation": "DERIVED_FROM",
+  "preserves_solution": true,
+  "source_sha256": "60a3be22fe63d9886e4556c15f2865a1c0c517b79645af8f06885bc40ff382a4",
+  "target_sha256": "60a3be22fe63d9886e4556c15f2865a1c0c517b79645af8f06885bc40ff382a4",
+  "solution_id": "source-83",
+  "solution_sha256": "60a3be22fe63d9886e4556c15f2865a1c0c517b79645af8f06885bc40ff382a4",
+  "capture_contract": "Both captured endpoint artifacts include the exact UTF-8 source solution payload."
+}

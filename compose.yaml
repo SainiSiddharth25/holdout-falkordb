@@ -1,0 +1,21 @@
+services:
+  holdout:
+    build: .
+    ports:
+      - "127.0.0.1:8010:8000"
+    environment:
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      HOLDOUT_MODEL: ${HOLDOUT_MODEL:-}
+      HOLDOUT_API_BASE: ${HOLDOUT_API_BASE:-https://api.openai.com/v1}
+      HOLDOUT_API_MODE: ${HOLDOUT_API_MODE:-responses}
+      HOLDOUT_REASONING_EFFORT: ${HOLDOUT_REASONING_EFFORT:-low}
+      HOLDOUT_MAX_OUTPUT_TOKENS: ${HOLDOUT_MAX_OUTPUT_TOKENS:-4096}
+      HOLDOUT_MAX_PROVIDER_CALLS: ${HOLDOUT_MAX_PROVIDER_CALLS:-12}
+      HOLDOUT_MAX_TOOL_CALLS: ${HOLDOUT_MAX_TOOL_CALLS:-36}
+      HOLDOUT_MAX_TOKENS: ${HOLDOUT_MAX_TOKENS:-100000}
+      HOLDOUT_MAX_SECONDS: ${HOLDOUT_MAX_SECONDS:-180}
+    volumes:
+      - holdout-runs:/app/.runtime/sessions
+
+volumes:
+  holdout-runs:

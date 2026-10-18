@@ -1,0 +1,2264 @@
+{
+  "artifact_sha256": {
+    "eval.jsonl": "57e96ef20e12233457da1170a12609e9e73f631bfca486e481f39aa5741f15d4",
+    "train.jsonl": "473f2062ab83292ef537b8589470ff97c1694a600409422adda83bcd85ed6b65"
+  },
+  "candidates": [
+    {
+      "basis": "content_retrieval",
+      "eval_id": "e201",
+      "evidence": {
+        "attempts": [
+          {
+            "evidence": [
+              {
+                "eval_id": "e201",
+                "eval_sha256": "6437197dfe5217ce490bb6921ed88874ce1a9924fde3260030efe3ab5d47ff2b",
+                "kind": "artifact_hashes",
+                "train_id": "t101",
+                "train_sha256": "7ae6f1a3062101b38d5288b2d9b265d76a9eee1ac157209235d8a54cdc66ec80"
+              },
+              {
+                "comparison_sha256": "7dcfb3b95424a5fe047304ad028bf7ea7a90f7b0b8dfc150c1c6570a510e96cf",
+                "eval_symbol": "clip_window",
+                "kind": "solution_unit_match",
+                "scope": "declared independently solution-bearing functions",
+                "train_symbol": "clip_window"
+              }
+            ],
+            "method": "exact",
+            "reason": "A declared answer function occurs exactly in both captured artifacts.",
+            "verdict": "confirmed"
+          }
+        ],
+        "evidence": [
+          {
+            "eval_id": "e201",
+            "eval_sha256": "6437197dfe5217ce490bb6921ed88874ce1a9924fde3260030efe3ab5d47ff2b",
+            "kind": "artifact_hashes",
+            "train_id": "t101",
+            "train_sha256": "7ae6f1a3062101b38d5288b2d9b265d76a9eee1ac157209235d8a54cdc66ec80"
+          },
+          {
+            "comparison_sha256": "7dcfb3b95424a5fe047304ad028bf7ea7a90f7b0b8dfc150c1c6570a510e96cf",
+            "eval_symbol": "clip_window",
+            "kind": "solution_unit_match",
+            "scope": "declared independently solution-bearing functions",
+            "train_symbol": "clip_window"
+          }
+        ],
+        "method": "exact",
+        "reason": "A declared answer function occurs exactly in both captured artifacts.",
+        "verdict": "confirmed"
+      },
+      "hint": "Search retrieved a workshop bundle for this exercise. Inspect its declared answer units.",
+      "id": "c401",
+      "status": "confirmed",
+      "train_id": "t101"
+    },
+    {
+      "basis": "content_retrieval",
+      "eval_id": "e202",
+      "evidence": {
+        "attempts": [
+          {
+            "evidence": [
+              {
+                "eval_id": "e202",
+                "eval_sha256": "4ef0f71f3fa270323bdebf9c31e34558bb3dca5e61a2aaa3bfd4df475ce99e63",
+                "kind": "artifact_hashes",
+                "train_id": "t101",
+                "train_sha256": "7ae6f1a3062101b38d5288b2d9b265d76a9eee1ac157209235d8a54cdc66ec80"
+              },
+              {
+                "comparison_sha256": "7cfb34edcf91b39aeaec73c209547ba4fc350734fd09fd9932dcd74ead47dad0",
+                "eval_symbol": "take_batch",
+                "kind": "solution_unit_match",
+                "scope": "declared independently solution-bearing functions",
+                "train_symbol": "take_batch"
+              }
+            ],
+            "method": "exact",
+            "reason": "A declared answer function occurs exactly in both captured artifacts.",
+            "verdict": "confirmed"
+          }
+        ],
+        "evidence": [
+          {
+            "eval_id": "e202",
+            "eval_sha256": "4ef0f71f3fa270323bdebf9c31e34558bb3dca5e61a2aaa3bfd4df475ce99e63",
+            "kind": "artifact_hashes",
+            "train_id": "t101",
+            "train_sha256": "7ae6f1a3062101b38d5288b2d9b265d76a9eee1ac157209235d8a54cdc66ec80"
+          },
+          {
+            "comparison_sha256": "7cfb34edcf91b39aeaec73c209547ba4fc350734fd09fd9932dcd74ead47dad0",
+            "eval_symbol": "take_batch",
+            "kind": "solution_unit_match",
+            "scope": "declared independently solution-bearing functions",
+            "train_symbol": "take_batch"
+          }
+        ],
+        "method": "exact",
+        "reason": "A declared answer function occurs exactly in both captured artifacts.",
+        "verdict": "confirmed"
+      },
+      "hint": "The exercise and workshop bundle share a pagination description.",
+      "id": "c402",
+      "status": "confirmed",
+      "train_id": "t101"
+    },
+    {
+      "basis": "code_retrieval",
+      "eval_id": "e202",
+      "evidence": {
+        "attempts": [
+          {
+            "evidence": [
+              {
+                "eval_id": "e202",
+                "eval_sha256": "4ef0f71f3fa270323bdebf9c31e34558bb3dca5e61a2aaa3bfd4df475ce99e63",
+                "kind": "artifact_hashes",
+                "train_id": "t102",
+                "train_sha256": "e15bb2e90f30d1526791fefba1e99d9cf622cdaa7b60d7ff9ec3f35b8359d074"
+              },
+              {
+                "eval_symbols": [
+                  "take_batch"
+                ],
+                "kind": "comparison_coverage",
+                "notes": [],
+                "supported_eval_symbols": [
+                  "take_batch"
+                ],
+                "supported_train_symbols": [
+                  "slice_group"
+                ],
+                "train_symbols": [
+                  "slice_group"
+                ]
+              }
+            ],
+            "method": "exact",
+            "reason": "No supported answer match was established. A mismatch alone cannot establish independence; provenance or another investigation may still show leakage.",
+            "verdict": "unresolved"
+          },
+          {
+            "evidence": [
+              {
+                "eval_id": "e202",
+                "eval_sha256": "4ef0f71f3fa270323bdebf9c31e34558bb3dca5e61a2aaa3bfd4df475ce99e63",
+                "kind": "artifact_hashes",
+                "train_id": "t102",
+                "train_sha256": "e15bb2e90f30d1526791fefba1e99d9cf622cdaa7b60d7ff9ec3f35b8359d074"
+              },
+              {
+                "comparison_sha256": "c1d5dd9139ff83485a2ead49a99327bcb9b596cf068c0c373366cee258887146",
+                "eval_symbol": "take_batch",
+                "kind": "solution_unit_match",
+                "scope": "declared independently solution-bearing functions",
+                "train_symbol": "slice_group"
+              }
+            ],
+            "method": "normalized_ast",
+            "reason": "Declared answer functions have equal ASTs after renaming only local bindings and the function name; constants, operators, attributes and global names are preserved. This is a bounded structural match, not a claim of arbitrary semantic equivalence.",
+            "verdict": "confirmed"
+          }
+        ],
+        "evidence": [
+          {
+            "eval_id": "e202",
+            "eval_sha256": "4ef0f71f3fa270323bdebf9c31e34558bb3dca5e61a2aaa3bfd4df475ce99e63",
+            "kind": "artifact_hashes",
+            "train_id": "t102",
+            "train_sha256": "e15bb2e90f30d1526791fefba1e99d9cf622cdaa7b60d7ff9ec3f35b8359d074"
+          },
+          {
+            "comparison_sha256": "c1d5dd9139ff83485a2ead49a99327bcb9b596cf068c0c373366cee258887146",
+            "eval_symbol": "take_batch",
+            "kind": "solution_unit_match",
+            "scope": "declared independently solution-bearing functions",
+            "train_symbol": "slice_group"
+          }
+        ],
+        "method": "normalized_ast",
+        "reason": "Declared answer functions have equal ASTs after renaming only local bindings and the function name; constants, operators, attributes and global names are preserved. This is a bounded structural match, not a claim of arbitrary semantic equivalence.",
+        "verdict": "confirmed"
+      },
+      "hint": "Code retrieval found a pagination routine with different identifiers.",
+      "id": "c403",
+      "status": "confirmed",
+      "train_id": "t102"
+    },
+    {
+      "basis": "source_retrieval",
+      "eval_id": "e203",
+      "evidence": {
+        "attempts": [
+          {
+            "evidence": [
+              {
+                "eval_id": "e203",
+                "eval_sha256": "60a3be22fe63d9886e4556c15f2865a1c0c517b79645af8f06885bc40ff382a4",
+                "kind": "artifact_hashes",
+                "train_id": "t103",
+                "train_sha256": "fae4a544cdc009849c401d5cb3222821ffe26fe53bf6e1c8644fe26c43299434"
+              },
+              {
+                "eval_symbols": [
+                  "release_key"
+                ],
+                "kind": "comparison_coverage",
+                "notes": [
+                  "This artifact does not declare directly inspectable answer code."
+                ],
+                "supported_eval_symbols": [
+                  "release_key"
+                ],
+                "supported_train_symbols": [],
+                "train_symbols": []
+              }
+            ],
+            "method": "exact",
+            "reason": "No supported answer match was established. A mismatch alone cannot establish independence; provenance or another investigation may still show leakage.",
+            "verdict": "unresolved"
+          },
+          {
+            "evidence": [
+              {
+                "eval_id": "e203",
+                "eval_sha256": "60a3be22fe63d9886e4556c15f2865a1c0c517b79645af8f06885bc40ff382a4",
+                "kind": "artifact_hashes",
+                "train_id": "t103",
+                "train_sha256": "fae4a544cdc009849c401d5cb3222821ffe26fe53bf6e1c8644fe26c43299434"
+              },
+              {
+                "eval_symbols": [
+                  "release_key"
+                ],
+                "kind": "comparison_coverage",
+                "notes": [
+                  "This artifact does not declare directly inspectable answer code."
+                ],
+                "supported_eval_symbols": [],
+                "supported_train_symbols": [],
+                "train_symbols": []
+              }
+            ],
+            "method": "normalized_ast",
+            "reason": "No supported answer match was established. A mismatch alone cannot establish independence; provenance or another investigation may still show leakage.",
+            "verdict": "unresolved"
+          },
+          {
+            "evidence": [
+              {
+                "eval_path": {
+                  "nodes": [
+                    "e203",
+                    "source-83"
+                  ],
+                  "relations": [
+                    "DERIVED_FROM"
+                  ]
+                },
+                "kind": "shared_solution",
+                "solution_id": "source-83",
+                "train_path": {
+                  "nodes": [
+                    "t103",
+                    "capture-31",
+                    "source-83"
+                  ],
+                  "relations": [
+                    "DERIVED_FROM",
+                    "DERIVED_FROM"
+                  ]
+                }
+              },
+              {
+                "kind": "verified_lineage_link",
+                "manifest_path": "manifests/edge-01.json",
+                "manifest_sha256": "c8fe505518984fad30007ef841ab678a90e3e51797c3a09ce9d561e3fa58a051",
+                "relation": "DERIVED_FROM",
+                "solution_sha256": "60a3be22fe63d9886e4556c15f2865a1c0c517b79645af8f06885bc40ff382a4",
+                "source": "t103",
+                "source_sha256": "fae4a544cdc009849c401d5cb3222821ffe26fe53bf6e1c8644fe26c43299434",
+                "target": "capture-31",
+                "target_sha256": "d51c1e7e3b98964231c200d66915d0d72d91a464153066f66a2ea8ddf1d8bff3"
+              },
+              {
+                "kind": "verified_lineage_link",
+                "manifest_path": "manifests/edge-02.json",
+                "manifest_sha256": "b4af0b39c39e6fdd7c42e349689ecd647b983bb5e8b89770379c68586701ba1a",
+                "relation": "DERIVED_FROM",
+                "solution_sha256": "60a3be22fe63d9886e4556c15f2865a1c0c517b79645af8f06885bc40ff382a4",
+                "source": "capture-31",
+                "source_sha256": "d51c1e7e3b98964231c200d66915d0d72d91a464153066f66a2ea8ddf1d8bff3",
+                "target": "source-83",
+                "target_sha256": "60a3be22fe63d9886e4556c15f2865a1c0c517b79645af8f06885bc40ff382a4"
+              },
+              {
+                "kind": "verified_lineage_link",
+                "manifest_path": "manifests/edge-03.json",
+                "manifest_sha256": "6ef86776aaf9e12315edfb242090630d8ab79e49e52fcadb390576d1f4103fb0",
+                "relation": "DERIVED_FROM",
+                "solution_sha256": "60a3be22fe63d9886e4556c15f2865a1c0c517b79645af8f06885bc40ff382a4",
+                "source": "e203",
+                "source_sha256": "60a3be22fe63d9886e4556c15f2865a1c0c517b79645af8f06885bc40ff382a4",
+                "target": "source-83",
+                "target_sha256": "60a3be22fe63d9886e4556c15f2865a1c0c517b79645af8f06885bc40ff382a4"
+              }
+            ],
+            "graph_provenance": {
+              "eval": {
+                "links": [
+                  {
+                    "evidence_path": "manifests/edge-03.json",
+                    "relation": "DERIVED_FROM",
+                    "source": "e203",
+                    "target": "source-83"
+                  }
+                ],
+                "nodes": [
+                  {
+                    "content_path": "records/e203.py",
+                    "content_role": "solution",
+                    "content_sha256": "60a3be22fe63d9886e4556c15f2865a1c0c517b79645af8f06885bc40ff382a4",
+                    "cost": 9,
+                    "id": "e203",
+                    "kind": "record",
+                    "protected": true,
+                    "solution_symbols": [
+                      "release_key"
+                    ],
+                    "source_id": "source-83",
+                    "split": "eval",
+                    "title": "Release label exercise"
+                  },
+                  {
+                    "content_sha256": "60a3be22fe63d9886e4556c15f2865a1c0c517b79645af8f06885bc40ff382a4",
+                    "id": "source-83",
+                    "kind": "solution",
+                    "path": "sources/source-83.py",
+                    "title": "Workshop source capture 83"
+                  }
+                ],
+                "paths": [
+                  {
+                    "nodes": [
+                      "e203"
+                    ],
+                    "relations": []
+                  },
+                  {
+                    "nodes": [
+                      "e203",
+                      "source-83"
+                    ],
+                    "relations": [
+                      "DERIVED_FROM"
+                    ]
+                  }
+                ],
+                "revision": 5
+              },
+              "train": {
+                "links": [
+                  {
+                    "evidence_path": "manifests/edge-01.json",
+                    "relation": "DERIVED_FROM",
+                    "source": "t103",
+                    "target": "capture-31"
+                  },
+                  {
+                    "evidence_path": "manifests/edge-02.json",
+                    "relation": "DERIVED_FROM",
+                    "source": "capture-31",
+                    "target": "source-83"
+                  }
+                ],
+                "nodes": [
+                  {
+                    "content_path": "records/t103.md",
+                    "content_role": "explanation",
+                    "content_sha256": "fae4a544cdc009849c401d5cb3222821ffe26fe53bf6e1c8644fe26c43299434",
+                    "cost": 3,
+                    "id": "t103",
+                    "kind": "record",
+                    "protected": false,
+                    "solution_symbols": [],
+                    "source_id": "capture-31",
+                    "split": "train",
+                    "title": "Release parsing discussion"
+                  },
+                  {
+                    "content_sha256": "d51c1e7e3b98964231c200d66915d0d72d91a464153066f66a2ea8ddf1d8bff3",
+                    "id": "capture-31",
+                    "kind": "transformation",
+                    "path": "captures/capture-31.md",
+                    "title": "Workshop discussion capture 31"
+                  },
+                  {
+                    "content_sha256": "60a3be22fe63d9886e4556c15f2865a1c0c517b79645af8f06885bc40ff382a4",
+                    "id": "source-83",
+                    "kind": "solution",
+                    "path": "sources/source-83.py",
+                    "title": "Workshop source capture 83"
+                  }
+                ],
+                "paths": [
+                  {
+                    "nodes": [
+                      "t103"
+                    ],
+                    "relations": []
+                  },
+                  {
+                    "nodes": [
+                      "t103",
+                      "capture-31"
+                    ],
+                    "relations": [
+                      "DERIVED_FROM"
+                    ]
+                  },
+                  {
+                    "nodes": [
+                      "t103",
+                      "capture-31",
+                      "source-83"
+                    ],
+                    "relations": [
+                      "DERIVED_FROM",
+                      "DERIVED_FROM"
+                    ]
+                  }
+                ],
+                "revision": 5
+              }
+            },
+            "method": "provenance",
+            "reason": "Both graph-returned paths lead to the same captured solution. Every hop has matching artifact hashes and both endpoints contain the exact solution payload.",
+            "verdict": "confirmed"
+          }
+        ],
+        "evidence": [
+          {
+            "eval_path": {
+              "nodes": [
+                "e203",
+                "source-83"
+              ],
+              "relations": [
+                "DERIVED_FROM"
+              ]
+            },
+            "kind": "shared_solution",
+            "solution_id": "source-83",
+            "train_path": {
+              "nodes": [
+                "t103",
+                "capture-31",
+                "source-83"
+              ],
+              "relations": [
+                "DERIVED_FROM",
+                "DERIVED_FROM"
+              ]
+            }
+          },
+          {
+            "kind": "verified_lineage_link",
+            "manifest_path": "manifests/edge-01.json",
+            "manifest_sha256": "c8fe505518984fad30007ef841ab678a90e3e51797c3a09ce9d561e3fa58a051",
+            "relation": "DERIVED_FROM",
+            "solution_sha256": "60a3be22fe63d9886e4556c15f2865a1c0c517b79645af8f06885bc40ff382a4",
+            "source": "t103",
+            "source_sha256": "fae4a544cdc009849c401d5cb3222821ffe26fe53bf6e1c8644fe26c43299434",
+            "target": "capture-31",
+            "target_sha256": "d51c1e7e3b98964231c200d66915d0d72d91a464153066f66a2ea8ddf1d8bff3"
+          },
+          {
+            "kind": "verified_lineage_link",
+            "manifest_path": "manifests/edge-02.json",
+            "manifest_sha256": "b4af0b39c39e6fdd7c42e349689ecd647b983bb5e8b89770379c68586701ba1a",
+            "relation": "DERIVED_FROM",
+            "solution_sha256": "60a3be22fe63d9886e4556c15f2865a1c0c517b79645af8f06885bc40ff382a4",
+            "source": "capture-31",
+            "source_sha256": "d51c1e7e3b98964231c200d66915d0d72d91a464153066f66a2ea8ddf1d8bff3",
+            "target": "source-83",
+            "target_sha256": "60a3be22fe63d9886e4556c15f2865a1c0c517b79645af8f06885bc40ff382a4"
+          },
+          {
+            "kind": "verified_lineage_link",
+            "manifest_path": "manifests/edge-03.json",
+            "manifest_sha256": "6ef86776aaf9e12315edfb242090630d8ab79e49e52fcadb390576d1f4103fb0",
+            "relation": "DERIVED_FROM",
+            "solution_sha256": "60a3be22fe63d9886e4556c15f2865a1c0c517b79645af8f06885bc40ff382a4",
+            "source": "e203",
+            "source_sha256": "60a3be22fe63d9886e4556c15f2865a1c0c517b79645af8f06885bc40ff382a4",
+            "target": "source-83",
+            "target_sha256": "60a3be22fe63d9886e4556c15f2865a1c0c517b79645af8f06885bc40ff382a4"
+          }
+        ],
+        "graph_provenance": {
+          "eval": {
+            "links": [
+              {
+                "evidence_path": "manifests/edge-03.json",
+                "relation": "DERIVED_FROM",
+                "source": "e203",
+                "target": "source-83"
+              }
+            ],
+            "nodes": [
+              {
+                "content_path": "records/e203.py",
+                "content_role": "solution",
+                "content_sha256": "60a3be22fe63d9886e4556c15f2865a1c0c517b79645af8f06885bc40ff382a4",
+                "cost": 9,
+                "id": "e203",
+                "kind": "record",
+                "protected": true,
+                "solution_symbols": [
+                  "release_key"
+                ],
+                "source_id": "source-83",
+                "split": "eval",
+                "title": "Release label exercise"
+              },
+              {
+                "content_sha256": "60a3be22fe63d9886e4556c15f2865a1c0c517b79645af8f06885bc40ff382a4",
+                "id": "source-83",
+                "kind": "solution",
+                "path": "sources/source-83.py",
+                "title": "Workshop source capture 83"
+              }
+            ],
+            "paths": [
+              {
+                "nodes": [
+                  "e203"
+                ],
+                "relations": []
+              },
+              {
+                "nodes": [
+                  "e203",
+                  "source-83"
+                ],
+                "relations": [
+                  "DERIVED_FROM"
+                ]
+              }
+            ],
+            "revision": 5
+          },
+          "train": {
+            "links": [
+              {
+                "evidence_path": "manifests/edge-01.json",
+                "relation": "DERIVED_FROM",
+                "source": "t103",
+                "target": "capture-31"
+              },
+              {
+                "evidence_path": "manifests/edge-02.json",
+                "relation": "DERIVED_FROM",
+                "source": "capture-31",
+                "target": "source-83"
+              }
+            ],
+            "nodes": [
+              {
+                "content_path": "records/t103.md",
+                "content_role": "explanation",
+                "content_sha256": "fae4a544cdc009849c401d5cb3222821ffe26fe53bf6e1c8644fe26c43299434",
+                "cost": 3,
+                "id": "t103",
+                "kind": "record",
+                "protected": false,
+                "solution_symbols": [],
+                "source_id": "capture-31",
+                "split": "train",
+                "title": "Release parsing discussion"
+              },
+              {
+                "content_sha256": "d51c1e7e3b98964231c200d66915d0d72d91a464153066f66a2ea8ddf1d8bff3",
+                "id": "capture-31",
+                "kind": "transformation",
+                "path": "captures/capture-31.md",
+                "title": "Workshop discussion capture 31"
+              },
+              {
+                "content_sha256": "60a3be22fe63d9886e4556c15f2865a1c0c517b79645af8f06885bc40ff382a4",
+                "id": "source-83",
+                "kind": "solution",
+                "path": "sources/source-83.py",
+                "title": "Workshop source capture 83"
+              }
+            ],
+            "paths": [
+              {
+                "nodes": [
+                  "t103"
+                ],
+                "relations": []
+              },
+              {
+                "nodes": [
+                  "t103",
+                  "capture-31"
+                ],
+                "relations": [
+                  "DERIVED_FROM"
+                ]
+              },
+              {
+                "nodes": [
+                  "t103",
+                  "capture-31",
+                  "source-83"
+                ],
+                "relations": [
+                  "DERIVED_FROM",
+                  "DERIVED_FROM"
+                ]
+              }
+            ],
+            "revision": 5
+          }
+        },
+        "method": "provenance",
+        "reason": "Both graph-returned paths lead to the same captured solution. Every hop has matching artifact hashes and both endpoints contain the exact solution payload.",
+        "verdict": "confirmed"
+      },
+      "hint": "A discussion capture and an exercise reference nearby workshop source entries.",
+      "id": "c404",
+      "status": "confirmed",
+      "train_id": "t103"
+    },
+    {
+      "basis": "shared_scaffold",
+      "eval_id": "e204",
+      "evidence": {
+        "attempts": [
+          {
+            "evidence": [
+              {
+                "eval_id": "e204",
+                "eval_sha256": "072248ef038d8096ffdfcfe97a1647e90e3de229718788e047c9848ea569e4c3",
+                "kind": "artifact_hashes",
+                "train_id": "t104",
+                "train_sha256": "f1c72fed23497566eaeec45238690f448ec933daec68dc6443bef4dd75c31ed4"
+              },
+              {
+                "eval_symbols": [
+                  "clean_tag"
+                ],
+                "kind": "comparison_coverage",
+                "notes": [],
+                "supported_eval_symbols": [
+                  "clean_tag"
+                ],
+                "supported_train_symbols": [
+                  "clean_tag"
+                ],
+                "train_symbols": [
+                  "clean_tag"
+                ]
+              }
+            ],
+            "method": "exact",
+            "reason": "No supported answer match was established. A mismatch alone cannot establish independence; provenance or another investigation may still show leakage.",
+            "verdict": "unresolved"
+          },
+          {
+            "evidence": [
+              {
+                "eval_id": "e204",
+                "eval_sha256": "072248ef038d8096ffdfcfe97a1647e90e3de229718788e047c9848ea569e4c3",
+                "kind": "artifact_hashes",
+                "train_id": "t104",
+                "train_sha256": "f1c72fed23497566eaeec45238690f448ec933daec68dc6443bef4dd75c31ed4"
+              },
+              {
+                "eval_symbols": [
+                  "clean_tag"
+                ],
+                "kind": "comparison_coverage",
+                "notes": [],
+                "supported_eval_symbols": [
+                  "clean_tag"
+                ],
+                "supported_train_symbols": [
+                  "clean_tag"
+                ],
+                "train_symbols": [
+                  "clean_tag"
+                ]
+              }
+            ],
+            "method": "normalized_ast",
+            "reason": "No supported answer match was established. A mismatch alone cannot establish independence; provenance or another investigation may still show leakage.",
+            "verdict": "unresolved"
+          },
+          {
+            "evidence": [
+              {
+                "candidate_basis": "shared_scaffold",
+                "entity_ids": [
+                  "source-42"
+                ],
+                "kind": "shared_scaffold"
+              },
+              {
+                "eval_id": "e204",
+                "eval_sha256": "072248ef038d8096ffdfcfe97a1647e90e3de229718788e047c9848ea569e4c3",
+                "kind": "artifact_hashes",
+                "train_id": "t104",
+                "train_sha256": "f1c72fed23497566eaeec45238690f448ec933daec68dc6443bef4dd75c31ed4"
+              },
+              {
+                "eval_symbols": [
+                  "clean_tag"
+                ],
+                "kind": "comparison_coverage",
+                "notes": [],
+                "supported_eval_symbols": [
+                  "clean_tag"
+                ],
+                "supported_train_symbols": [
+                  "clean_tag"
+                ],
+                "train_symbols": [
+                  "clean_tag"
+                ]
+              }
+            ],
+            "graph_provenance": {
+              "eval": {
+                "links": [
+                  {
+                    "relation": "USES_SCAFFOLD",
+                    "source": "e204",
+                    "target": "source-42"
+                  },
+                  {
+                    "relation": "DERIVED_FROM",
+                    "source": "e204",
+                    "target": "archive-24"
+                  }
+                ],
+                "nodes": [
+                  {
+                    "content_path": "records/e204.py",
+                    "content_role": "solution",
+                    "content_sha256": "072248ef038d8096ffdfcfe97a1647e90e3de229718788e047c9848ea569e4c3",
+                    "cost": 8,
+                    "id": "e204",
+                    "kind": "record",
+                    "protected": false,
+                    "solution_symbols": [
+                      "clean_tag"
+                    ],
+                    "source_id": "archive-24",
+                    "split": "eval",
+                    "title": "Tag normalization exercise"
+                  },
+                  {
+                    "content_sha256": "e8f53cae7e7a2e73c2aa9187ae25203a161ddb2723fa961fd68a43a59d52f429",
+                    "id": "source-42",
+                    "kind": "scaffold",
+                    "path": "sources/source-42.py",
+                    "title": "Shared input checking helper"
+                  },
+                  {
+                    "id": "archive-24",
+                    "kind": "source_reference",
+                    "title": "Catalog entry archive-24"
+                  }
+                ],
+                "paths": [
+                  {
+                    "nodes": [
+                      "e204"
+                    ],
+                    "relations": []
+                  },
+                  {
+                    "nodes": [
+                      "e204",
+                      "source-42"
+                    ],
+                    "relations": [
+                      "USES_SCAFFOLD"
+                    ]
+                  },
+                  {
+                    "nodes": [
+                      "e204",
+                      "archive-24"
+                    ],
+                    "relations": [
+                      "DERIVED_FROM"
+                    ]
+                  }
+                ],
+                "revision": 3
+              },
+              "train": {
+                "links": [
+                  {
+                    "relation": "USES_SCAFFOLD",
+                    "source": "t104",
+                    "target": "source-42"
+                  },
+                  {
+                    "relation": "DERIVED_FROM",
+                    "source": "t104",
+                    "target": "archive-14"
+                  }
+                ],
+                "nodes": [
+                  {
+                    "content_path": "records/t104.py",
+                    "content_role": "solution",
+                    "content_sha256": "f1c72fed23497566eaeec45238690f448ec933daec68dc6443bef4dd75c31ed4",
+                    "cost": 5,
+                    "id": "t104",
+                    "kind": "record",
+                    "protected": false,
+                    "solution_symbols": [
+                      "clean_tag"
+                    ],
+                    "source_id": "archive-14",
+                    "split": "train",
+                    "title": "Tag cleanup routine"
+                  },
+                  {
+                    "content_sha256": "e8f53cae7e7a2e73c2aa9187ae25203a161ddb2723fa961fd68a43a59d52f429",
+                    "id": "source-42",
+                    "kind": "scaffold",
+                    "path": "sources/source-42.py",
+                    "title": "Shared input checking helper"
+                  },
+                  {
+                    "id": "archive-14",
+                    "kind": "source_reference",
+                    "title": "Catalog entry archive-14"
+                  }
+                ],
+                "paths": [
+                  {
+                    "nodes": [
+                      "t104"
+                    ],
+                    "relations": []
+                  },
+                  {
+                    "nodes": [
+                      "t104",
+                      "source-42"
+                    ],
+                    "relations": [
+                      "USES_SCAFFOLD"
+                    ]
+                  },
+                  {
+                    "nodes": [
+                      "t104",
+                      "archive-14"
+                    ],
+                    "relations": [
+                      "DERIVED_FROM"
+                    ]
+                  }
+                ],
+                "revision": 3
+              }
+            },
+            "method": "provenance",
+            "reason": "This candidate was raised solely for a shared scaffold. The graph-supplied common artifact is scaffold, and the declared answer functions were inspected without an exact or normalized match. This rejects the scaffold-based claim, not every possible undiscovered leakage relationship.",
+            "verdict": "rejected"
+          }
+        ],
+        "evidence": [
+          {
+            "candidate_basis": "shared_scaffold",
+            "entity_ids": [
+              "source-42"
+            ],
+            "kind": "shared_scaffold"
+          },
+          {
+            "eval_id": "e204",
+            "eval_sha256": "072248ef038d8096ffdfcfe97a1647e90e3de229718788e047c9848ea569e4c3",
+            "kind": "artifact_hashes",
+            "train_id": "t104",
+            "train_sha256": "f1c72fed23497566eaeec45238690f448ec933daec68dc6443bef4dd75c31ed4"
+          },
+          {
+            "eval_symbols": [
+              "clean_tag"
+            ],
+            "kind": "comparison_coverage",
+            "notes": [],
+            "supported_eval_symbols": [
+              "clean_tag"
+            ],
+            "supported_train_symbols": [
+              "clean_tag"
+            ],
+            "train_symbols": [
+              "clean_tag"
+            ]
+          }
+        ],
+        "graph_provenance": {
+          "eval": {
+            "links": [
+              {
+                "relation": "USES_SCAFFOLD",
+                "source": "e204",
+                "target": "source-42"
+              },
+              {
+                "relation": "DERIVED_FROM",
+                "source": "e204",
+                "target": "archive-24"
+              }
+            ],
+            "nodes": [
+              {
+                "content_path": "records/e204.py",
+                "content_role": "solution",
+                "content_sha256": "072248ef038d8096ffdfcfe97a1647e90e3de229718788e047c9848ea569e4c3",
+                "cost": 8,
+                "id": "e204",
+                "kind": "record",
+                "protected": false,
+                "solution_symbols": [
+                  "clean_tag"
+                ],
+                "source_id": "archive-24",
+                "split": "eval",
+                "title": "Tag normalization exercise"
+              },
+              {
+                "content_sha256": "e8f53cae7e7a2e73c2aa9187ae25203a161ddb2723fa961fd68a43a59d52f429",
+                "id": "source-42",
+                "kind": "scaffold",
+                "path": "sources/source-42.py",
+                "title": "Shared input checking helper"
+              },
+              {
+                "id": "archive-24",
+                "kind": "source_reference",
+                "title": "Catalog entry archive-24"
+              }
+            ],
+            "paths": [
+              {
+                "nodes": [
+                  "e204"
+                ],
+                "relations": []
+              },
+              {
+                "nodes": [
+                  "e204",
+                  "source-42"
+                ],
+                "relations": [
+                  "USES_SCAFFOLD"
+                ]
+              },
+              {
+                "nodes": [
+                  "e204",
+                  "archive-24"
+                ],
+                "relations": [
+                  "DERIVED_FROM"
+                ]
+              }
+            ],
+            "revision": 3
+          },
+          "train": {
+            "links": [
+              {
+                "relation": "USES_SCAFFOLD",
+                "source": "t104",
+                "target": "source-42"
+              },
+              {
+                "relation": "DERIVED_FROM",
+                "source": "t104",
+                "target": "archive-14"
+              }
+            ],
+            "nodes": [
+              {
+                "content_path": "records/t104.py",
+                "content_role": "solution",
+                "content_sha256": "f1c72fed23497566eaeec45238690f448ec933daec68dc6443bef4dd75c31ed4",
+                "cost": 5,
+                "id": "t104",
+                "kind": "record",
+                "protected": false,
+                "solution_symbols": [
+                  "clean_tag"
+                ],
+                "source_id": "archive-14",
+                "split": "train",
+                "title": "Tag cleanup routine"
+              },
+              {
+                "content_sha256": "e8f53cae7e7a2e73c2aa9187ae25203a161ddb2723fa961fd68a43a59d52f429",
+                "id": "source-42",
+                "kind": "scaffold",
+                "path": "sources/source-42.py",
+                "title": "Shared input checking helper"
+              },
+              {
+                "id": "archive-14",
+                "kind": "source_reference",
+                "title": "Catalog entry archive-14"
+              }
+            ],
+            "paths": [
+              {
+                "nodes": [
+                  "t104"
+                ],
+                "relations": []
+              },
+              {
+                "nodes": [
+                  "t104",
+                  "source-42"
+                ],
+                "relations": [
+                  "USES_SCAFFOLD"
+                ]
+              },
+              {
+                "nodes": [
+                  "t104",
+                  "archive-14"
+                ],
+                "relations": [
+                  "DERIVED_FROM"
+                ]
+              }
+            ],
+            "revision": 3
+          }
+        },
+        "method": "provenance",
+        "reason": "This candidate was raised solely for a shared scaffold. The graph-supplied common artifact is scaffold, and the declared answer functions were inspected without an exact or normalized match. This rejects the scaffold-based claim, not every possible undiscovered leakage relationship.",
+        "verdict": "rejected"
+      },
+      "hint": "The candidate index reports a shared input checking helper.",
+      "id": "c405",
+      "status": "rejected",
+      "train_id": "t104"
+    },
+    {
+      "basis": "source_retrieval",
+      "eval_id": "e205",
+      "evidence": {
+        "attempts": [
+          {
+            "evidence": [
+              {
+                "eval_id": "e205",
+                "eval_sha256": "f5a0f6bce70679c8c39c5ce94725310cd163df883d7b1b3b7f2b7e57475c1bb7",
+                "kind": "artifact_hashes",
+                "train_id": "t105",
+                "train_sha256": "e49f5df571b02f55f3dd56342603e0ab6d3ad19eaa63b3156cbc07bb74e7528f"
+              },
+              {
+                "eval_symbols": [
+                  "cache_name"
+                ],
+                "kind": "comparison_coverage",
+                "notes": [
+                  "This artifact does not declare directly inspectable answer code."
+                ],
+                "supported_eval_symbols": [
+                  "cache_name"
+                ],
+                "supported_train_symbols": [],
+                "train_symbols": []
+              }
+            ],
+            "method": "exact",
+            "reason": "No supported answer match was established. A mismatch alone cannot establish independence; provenance or another investigation may still show leakage.",
+            "verdict": "unresolved"
+          },
+          {
+            "evidence": [
+              {
+                "eval_id": "e205",
+                "eval_sha256": "f5a0f6bce70679c8c39c5ce94725310cd163df883d7b1b3b7f2b7e57475c1bb7",
+                "kind": "artifact_hashes",
+                "train_id": "t105",
+                "train_sha256": "e49f5df571b02f55f3dd56342603e0ab6d3ad19eaa63b3156cbc07bb74e7528f"
+              },
+              {
+                "eval_symbols": [
+                  "cache_name"
+                ],
+                "kind": "comparison_coverage",
+                "notes": [
+                  "This artifact does not declare directly inspectable answer code."
+                ],
+                "supported_eval_symbols": [
+                  "cache_name"
+                ],
+                "supported_train_symbols": [],
+                "train_symbols": []
+              }
+            ],
+            "method": "normalized_ast",
+            "reason": "No supported answer match was established. A mismatch alone cannot establish independence; provenance or another investigation may still show leakage.",
+            "verdict": "unresolved"
+          },
+          {
+            "evidence": [
+              {
+                "eval_path": {
+                  "nodes": [
+                    "e205",
+                    "source-91"
+                  ],
+                  "relations": [
+                    "DERIVED_FROM"
+                  ]
+                },
+                "eval_verified": false,
+                "kind": "unverified_common_source",
+                "source_id": "source-91",
+                "train_path": {
+                  "nodes": [
+                    "t105",
+                    "source-91"
+                  ],
+                  "relations": [
+                    "DERIVED_FROM"
+                  ]
+                },
+                "train_verified": false
+              }
+            ],
+            "graph_provenance": {
+              "eval": {
+                "links": [
+                  {
+                    "relation": "DERIVED_FROM",
+                    "source": "e205",
+                    "target": "source-91"
+                  }
+                ],
+                "nodes": [
+                  {
+                    "content_path": "records/e205.py",
+                    "content_role": "solution",
+                    "content_sha256": "f5a0f6bce70679c8c39c5ce94725310cd163df883d7b1b3b7f2b7e57475c1bb7",
+                    "cost": 12,
+                    "id": "e205",
+                    "kind": "record",
+                    "protected": false,
+                    "solution_symbols": [
+                      "cache_name"
+                    ],
+                    "source_id": "source-91",
+                    "split": "eval",
+                    "title": "Request-name exercise"
+                  },
+                  {
+                    "capture_state": "missing",
+                    "id": "source-91",
+                    "kind": "source_reference",
+                    "title": "Catalog migration reference 91"
+                  }
+                ],
+                "paths": [
+                  {
+                    "nodes": [
+                      "e205"
+                    ],
+                    "relations": []
+                  },
+                  {
+                    "nodes": [
+                      "e205",
+                      "source-91"
+                    ],
+                    "relations": [
+                      "DERIVED_FROM"
+                    ]
+                  }
+                ],
+                "revision": 2
+              },
+              "train": {
+                "links": [
+                  {
+                    "relation": "DERIVED_FROM",
+                    "source": "t105",
+                    "target": "source-91"
+                  }
+                ],
+                "nodes": [
+                  {
+                    "content_path": "records/t105.md",
+                    "content_role": "explanation",
+                    "content_sha256": "e49f5df571b02f55f3dd56342603e0ab6d3ad19eaa63b3156cbc07bb74e7528f",
+                    "cost": 6,
+                    "id": "t105",
+                    "kind": "record",
+                    "protected": false,
+                    "solution_symbols": [],
+                    "source_id": "source-91",
+                    "split": "train",
+                    "title": "Request cache discussion"
+                  },
+                  {
+                    "capture_state": "missing",
+                    "id": "source-91",
+                    "kind": "source_reference",
+                    "title": "Catalog migration reference 91"
+                  }
+                ],
+                "paths": [
+                  {
+                    "nodes": [
+                      "t105"
+                    ],
+                    "relations": []
+                  },
+                  {
+                    "nodes": [
+                      "t105",
+                      "source-91"
+                    ],
+                    "relations": [
+                      "DERIVED_FROM"
+                    ]
+                  }
+                ],
+                "revision": 2
+              }
+            },
+            "method": "provenance",
+            "reason": "The supplied graph paths do not establish preserved solution lineage. Missing captures, shared references, or absent paths cannot be treated as evidence of independence.",
+            "verdict": "unresolved"
+          }
+        ],
+        "evidence": [
+          {
+            "eval_path": {
+              "nodes": [
+                "e205",
+                "source-91"
+              ],
+              "relations": [
+                "DERIVED_FROM"
+              ]
+            },
+            "eval_verified": false,
+            "kind": "unverified_common_source",
+            "source_id": "source-91",
+            "train_path": {
+              "nodes": [
+                "t105",
+                "source-91"
+              ],
+              "relations": [
+                "DERIVED_FROM"
+              ]
+            },
+            "train_verified": false
+          }
+        ],
+        "graph_provenance": {
+          "eval": {
+            "links": [
+              {
+                "relation": "DERIVED_FROM",
+                "source": "e205",
+                "target": "source-91"
+              }
+            ],
+            "nodes": [
+              {
+                "content_path": "records/e205.py",
+                "content_role": "solution",
+                "content_sha256": "f5a0f6bce70679c8c39c5ce94725310cd163df883d7b1b3b7f2b7e57475c1bb7",
+                "cost": 12,
+                "id": "e205",
+                "kind": "record",
+                "protected": false,
+                "solution_symbols": [
+                  "cache_name"
+                ],
+                "source_id": "source-91",
+                "split": "eval",
+                "title": "Request-name exercise"
+              },
+              {
+                "capture_state": "missing",
+                "id": "source-91",
+                "kind": "source_reference",
+                "title": "Catalog migration reference 91"
+              }
+            ],
+            "paths": [
+              {
+                "nodes": [
+                  "e205"
+                ],
+                "relations": []
+              },
+              {
+                "nodes": [
+                  "e205",
+                  "source-91"
+                ],
+                "relations": [
+                  "DERIVED_FROM"
+                ]
+              }
+            ],
+            "revision": 2
+          },
+          "train": {
+            "links": [
+              {
+                "relation": "DERIVED_FROM",
+                "source": "t105",
+                "target": "source-91"
+              }
+            ],
+            "nodes": [
+              {
+                "content_path": "records/t105.md",
+                "content_role": "explanation",
+                "content_sha256": "e49f5df571b02f55f3dd56342603e0ab6d3ad19eaa63b3156cbc07bb74e7528f",
+                "cost": 6,
+                "id": "t105",
+                "kind": "record",
+                "protected": false,
+                "solution_symbols": [],
+                "source_id": "source-91",
+                "split": "train",
+                "title": "Request cache discussion"
+              },
+              {
+                "capture_state": "missing",
+                "id": "source-91",
+                "kind": "source_reference",
+                "title": "Catalog migration reference 91"
+              }
+            ],
+            "paths": [
+              {
+                "nodes": [
+                  "t105"
+                ],
+                "relations": []
+              },
+              {
+                "nodes": [
+                  "t105",
+                  "source-91"
+                ],
+                "relations": [
+                  "DERIVED_FROM"
+                ]
+              }
+            ],
+            "revision": 2
+          }
+        },
+        "method": "provenance",
+        "reason": "The supplied graph paths do not establish preserved solution lineage. Missing captures, shared references, or absent paths cannot be treated as evidence of independence.",
+        "verdict": "unresolved"
+      },
+      "hint": "A catalog reference appears in both pools; inspect the capture coverage.",
+      "id": "c406",
+      "status": "unresolved",
+      "train_id": "t105"
+    },
+    {
+      "basis": "content_retrieval",
+      "eval_id": "e206",
+      "evidence": {
+        "attempts": [
+          {
+            "evidence": [
+              {
+                "eval_id": "e206",
+                "eval_sha256": "86b0f2781b90c1cbba14d285976f6f368bff9c55b72dbefcee9ab6da4ea3f4dc",
+                "kind": "artifact_hashes",
+                "train_id": "t106",
+                "train_sha256": "86b0f2781b90c1cbba14d285976f6f368bff9c55b72dbefcee9ab6da4ea3f4dc"
+              },
+              {
+                "comparison_sha256": "f3bba034fceb2af0be23314109e0ea6cb2dad0d89d6d6e9d453e9724c8337846",
+                "eval_symbol": "order_events",
+                "kind": "solution_unit_match",
+                "scope": "declared independently solution-bearing functions",
+                "train_symbol": "order_events"
+              }
+            ],
+            "method": "exact",
+            "reason": "A declared answer function occurs exactly in both captured artifacts.",
+            "verdict": "confirmed"
+          }
+        ],
+        "evidence": [
+          {
+            "eval_id": "e206",
+            "eval_sha256": "86b0f2781b90c1cbba14d285976f6f368bff9c55b72dbefcee9ab6da4ea3f4dc",
+            "kind": "artifact_hashes",
+            "train_id": "t106",
+            "train_sha256": "86b0f2781b90c1cbba14d285976f6f368bff9c55b72dbefcee9ab6da4ea3f4dc"
+          },
+          {
+            "comparison_sha256": "f3bba034fceb2af0be23314109e0ea6cb2dad0d89d6d6e9d453e9724c8337846",
+            "eval_symbol": "order_events",
+            "kind": "solution_unit_match",
+            "scope": "declared independently solution-bearing functions",
+            "train_symbol": "order_events"
+          }
+        ],
+        "method": "exact",
+        "reason": "A declared answer function occurs exactly in both captured artifacts.",
+        "verdict": "confirmed"
+      },
+      "hint": "The event replay exercise retrieved an ordering reference.",
+      "id": "c407",
+      "status": "confirmed",
+      "train_id": "t106"
+    },
+    {
+      "basis": "code_retrieval",
+      "eval_id": "e201",
+      "evidence": {
+        "attempts": [
+          {
+            "evidence": [
+              {
+                "eval_id": "e201",
+                "eval_sha256": "6437197dfe5217ce490bb6921ed88874ce1a9924fde3260030efe3ab5d47ff2b",
+                "kind": "artifact_hashes",
+                "train_id": "t107",
+                "train_sha256": "4bc8d0be7e09f52f0019ddf5363f509c9f17e5199f975ddf0e49312f848b10a0"
+              },
+              {
+                "eval_symbols": [
+                  "clip_window"
+                ],
+                "kind": "comparison_coverage",
+                "notes": [],
+                "supported_eval_symbols": [
+                  "clip_window"
+                ],
+                "supported_train_symbols": [
+                  "clip_window"
+                ],
+                "train_symbols": [
+                  "clip_window"
+                ]
+              }
+            ],
+            "method": "exact",
+            "reason": "No supported answer match was established. A mismatch alone cannot establish independence; provenance or another investigation may still show leakage.",
+            "verdict": "unresolved"
+          },
+          {
+            "evidence": [
+              {
+                "eval_id": "e201",
+                "eval_sha256": "6437197dfe5217ce490bb6921ed88874ce1a9924fde3260030efe3ab5d47ff2b",
+                "kind": "artifact_hashes",
+                "train_id": "t107",
+                "train_sha256": "4bc8d0be7e09f52f0019ddf5363f509c9f17e5199f975ddf0e49312f848b10a0"
+              },
+              {
+                "eval_symbols": [
+                  "clip_window"
+                ],
+                "kind": "comparison_coverage",
+                "notes": [],
+                "supported_eval_symbols": [
+                  "clip_window"
+                ],
+                "supported_train_symbols": [
+                  "clip_window"
+                ],
+                "train_symbols": [
+                  "clip_window"
+                ]
+              }
+            ],
+            "method": "normalized_ast",
+            "reason": "No supported answer match was established. A mismatch alone cannot establish independence; provenance or another investigation may still show leakage.",
+            "verdict": "unresolved"
+          },
+          {
+            "evidence": [
+              {
+                "eval_paths": 2,
+                "kind": "path_coverage",
+                "train_paths": 2
+              }
+            ],
+            "graph_provenance": {
+              "eval": {
+                "links": [
+                  {
+                    "relation": "DERIVED_FROM",
+                    "source": "e201",
+                    "target": "archive-21"
+                  }
+                ],
+                "nodes": [
+                  {
+                    "content_path": "records/e201.py",
+                    "content_role": "solution",
+                    "content_sha256": "6437197dfe5217ce490bb6921ed88874ce1a9924fde3260030efe3ab5d47ff2b",
+                    "cost": 10,
+                    "id": "e201",
+                    "kind": "record",
+                    "protected": false,
+                    "solution_symbols": [
+                      "clip_window"
+                    ],
+                    "source_id": "archive-21",
+                    "split": "eval",
+                    "title": "Window inclusion exercise"
+                  },
+                  {
+                    "id": "archive-21",
+                    "kind": "source_reference",
+                    "title": "Catalog entry archive-21"
+                  }
+                ],
+                "paths": [
+                  {
+                    "nodes": [
+                      "e201"
+                    ],
+                    "relations": []
+                  },
+                  {
+                    "nodes": [
+                      "e201",
+                      "archive-21"
+                    ],
+                    "relations": [
+                      "DERIVED_FROM"
+                    ]
+                  }
+                ],
+                "revision": 1
+              },
+              "train": {
+                "links": [
+                  {
+                    "relation": "DERIVED_FROM",
+                    "source": "t107",
+                    "target": "archive-17"
+                  }
+                ],
+                "nodes": [
+                  {
+                    "content_path": "records/t107.py",
+                    "content_role": "solution",
+                    "content_sha256": "4bc8d0be7e09f52f0019ddf5363f509c9f17e5199f975ddf0e49312f848b10a0",
+                    "cost": 6,
+                    "id": "t107",
+                    "kind": "record",
+                    "protected": false,
+                    "solution_symbols": [
+                      "clip_window"
+                    ],
+                    "source_id": "archive-17",
+                    "split": "train",
+                    "title": "Window boundary variant"
+                  },
+                  {
+                    "id": "archive-17",
+                    "kind": "source_reference",
+                    "title": "Catalog entry archive-17"
+                  }
+                ],
+                "paths": [
+                  {
+                    "nodes": [
+                      "t107"
+                    ],
+                    "relations": []
+                  },
+                  {
+                    "nodes": [
+                      "t107",
+                      "archive-17"
+                    ],
+                    "relations": [
+                      "DERIVED_FROM"
+                    ]
+                  }
+                ],
+                "revision": 1
+              }
+            },
+            "method": "provenance",
+            "reason": "The supplied graph paths do not establish preserved solution lineage. Missing captures, shared references, or absent paths cannot be treated as evidence of independence.",
+            "verdict": "unresolved"
+          }
+        ],
+        "evidence": [
+          {
+            "eval_paths": 2,
+            "kind": "path_coverage",
+            "train_paths": 2
+          }
+        ],
+        "graph_provenance": {
+          "eval": {
+            "links": [
+              {
+                "relation": "DERIVED_FROM",
+                "source": "e201",
+                "target": "archive-21"
+              }
+            ],
+            "nodes": [
+              {
+                "content_path": "records/e201.py",
+                "content_role": "solution",
+                "content_sha256": "6437197dfe5217ce490bb6921ed88874ce1a9924fde3260030efe3ab5d47ff2b",
+                "cost": 10,
+                "id": "e201",
+                "kind": "record",
+                "protected": false,
+                "solution_symbols": [
+                  "clip_window"
+                ],
+                "source_id": "archive-21",
+                "split": "eval",
+                "title": "Window inclusion exercise"
+              },
+              {
+                "id": "archive-21",
+                "kind": "source_reference",
+                "title": "Catalog entry archive-21"
+              }
+            ],
+            "paths": [
+              {
+                "nodes": [
+                  "e201"
+                ],
+                "relations": []
+              },
+              {
+                "nodes": [
+                  "e201",
+                  "archive-21"
+                ],
+                "relations": [
+                  "DERIVED_FROM"
+                ]
+              }
+            ],
+            "revision": 1
+          },
+          "train": {
+            "links": [
+              {
+                "relation": "DERIVED_FROM",
+                "source": "t107",
+                "target": "archive-17"
+              }
+            ],
+            "nodes": [
+              {
+                "content_path": "records/t107.py",
+                "content_role": "solution",
+                "content_sha256": "4bc8d0be7e09f52f0019ddf5363f509c9f17e5199f975ddf0e49312f848b10a0",
+                "cost": 6,
+                "id": "t107",
+                "kind": "record",
+                "protected": false,
+                "solution_symbols": [
+                  "clip_window"
+                ],
+                "source_id": "archive-17",
+                "split": "train",
+                "title": "Window boundary variant"
+              },
+              {
+                "id": "archive-17",
+                "kind": "source_reference",
+                "title": "Catalog entry archive-17"
+              }
+            ],
+            "paths": [
+              {
+                "nodes": [
+                  "t107"
+                ],
+                "relations": []
+              },
+              {
+                "nodes": [
+                  "t107",
+                  "archive-17"
+                ],
+                "relations": [
+                  "DERIVED_FROM"
+                ]
+              }
+            ],
+            "revision": 1
+          }
+        },
+        "method": "provenance",
+        "reason": "The supplied graph paths do not establish preserved solution lineage. Missing captures, shared references, or absent paths cannot be treated as evidence of independence.",
+        "verdict": "unresolved"
+      },
+      "hint": "A token-based index retrieved a window-boundary routine.",
+      "id": "c408",
+      "status": "unresolved",
+      "train_id": "t107"
+    }
+  ],
+  "conservative": true,
+  "created_at": "2026-10-18T13:13:23.447276+00:00",
+  "engine": {
+    "capability_revision": 1,
+    "database": "FalkorDB",
+    "module_version": 60001,
+    "module_version_text": "6.0.1",
+    "native_maxflow": true,
+    "native_procedure": "algo.maxFlow",
+    "reason": null,
+    "runtime": "embedded"
+  },
+  "fixture_id": "holdout-workshop-v1",
+  "input_catalog_sha256": "736770b71b7ae2b081a32400b698f1c6d74055378de582fa7d0df2bdc0d0644c",
+  "input_fingerprints": {
+    "captures/capture-31.md": "d51c1e7e3b98964231c200d66915d0d72d91a464153066f66a2ea8ddf1d8bff3",
+    "manifests/edge-01.json": "c8fe505518984fad30007ef841ab678a90e3e51797c3a09ce9d561e3fa58a051",
+    "manifests/edge-02.json": "b4af0b39c39e6fdd7c42e349689ecd647b983bb5e8b89770379c68586701ba1a",
+    "manifests/edge-03.json": "6ef86776aaf9e12315edfb242090630d8ab79e49e52fcadb390576d1f4103fb0",
+    "records/e201.py": "6437197dfe5217ce490bb6921ed88874ce1a9924fde3260030efe3ab5d47ff2b",
+    "records/e202.py": "4ef0f71f3fa270323bdebf9c31e34558bb3dca5e61a2aaa3bfd4df475ce99e63",
+    "records/e203.py": "60a3be22fe63d9886e4556c15f2865a1c0c517b79645af8f06885bc40ff382a4",
+    "records/e204.py": "072248ef038d8096ffdfcfe97a1647e90e3de229718788e047c9848ea569e4c3",
+    "records/e205.py": "f5a0f6bce70679c8c39c5ce94725310cd163df883d7b1b3b7f2b7e57475c1bb7",
+    "records/e206.py": "86b0f2781b90c1cbba14d285976f6f368bff9c55b72dbefcee9ab6da4ea3f4dc",
+    "records/t101.py": "7ae6f1a3062101b38d5288b2d9b265d76a9eee1ac157209235d8a54cdc66ec80",
+    "records/t102.py": "e15bb2e90f30d1526791fefba1e99d9cf622cdaa7b60d7ff9ec3f35b8359d074",
+    "records/t103.md": "fae4a544cdc009849c401d5cb3222821ffe26fe53bf6e1c8644fe26c43299434",
+    "records/t104.py": "f1c72fed23497566eaeec45238690f448ec933daec68dc6443bef4dd75c31ed4",
+    "records/t105.md": "e49f5df571b02f55f3dd56342603e0ab6d3ad19eaa63b3156cbc07bb74e7528f",
+    "records/t106.py": "86b0f2781b90c1cbba14d285976f6f368bff9c55b72dbefcee9ab6da4ea3f4dc",
+    "records/t107.py": "4bc8d0be7e09f52f0019ddf5363f509c9f17e5199f975ddf0e49312f848b10a0",
+    "records/t108.py": "5b77d05074aee91208e621ac39a78948ec01cae13a6dcb4379eba0956c5be3a3",
+    "sources/source-42.py": "e8f53cae7e7a2e73c2aa9187ae25203a161ddb2723fa961fd68a43a59d52f429",
+    "sources/source-83.py": "60a3be22fe63d9886e4556c15f2865a1c0c517b79645af8f06885bc40ff382a4"
+  },
+  "input_records": [
+    {
+      "content_path": "records/e201.py",
+      "content_role": "solution",
+      "content_sha256": "6437197dfe5217ce490bb6921ed88874ce1a9924fde3260030efe3ab5d47ff2b",
+      "cost": 10,
+      "id": "e201",
+      "protected": false,
+      "solution_symbols": [
+        "clip_window"
+      ],
+      "source_id": "archive-21",
+      "split": "eval",
+      "title": "Window inclusion exercise"
+    },
+    {
+      "content_path": "records/e202.py",
+      "content_role": "solution",
+      "content_sha256": "4ef0f71f3fa270323bdebf9c31e34558bb3dca5e61a2aaa3bfd4df475ce99e63",
+      "cost": 1,
+      "id": "e202",
+      "protected": false,
+      "solution_symbols": [
+        "take_batch"
+      ],
+      "source_id": "archive-22",
+      "split": "eval",
+      "title": "Bounded batching exercise"
+    },
+    {
+      "content_path": "records/e203.py",
+      "content_role": "solution",
+      "content_sha256": "60a3be22fe63d9886e4556c15f2865a1c0c517b79645af8f06885bc40ff382a4",
+      "cost": 9,
+      "id": "e203",
+      "protected": true,
+      "solution_symbols": [
+        "release_key"
+      ],
+      "source_id": "source-83",
+      "split": "eval",
+      "title": "Release label exercise"
+    },
+    {
+      "content_path": "records/e204.py",
+      "content_role": "solution",
+      "content_sha256": "072248ef038d8096ffdfcfe97a1647e90e3de229718788e047c9848ea569e4c3",
+      "cost": 8,
+      "id": "e204",
+      "protected": false,
+      "solution_symbols": [
+        "clean_tag"
+      ],
+      "source_id": "archive-24",
+      "split": "eval",
+      "title": "Tag normalization exercise"
+    },
+    {
+      "content_path": "records/e205.py",
+      "content_role": "solution",
+      "content_sha256": "f5a0f6bce70679c8c39c5ce94725310cd163df883d7b1b3b7f2b7e57475c1bb7",
+      "cost": 12,
+      "id": "e205",
+      "protected": false,
+      "solution_symbols": [
+        "cache_name"
+      ],
+      "source_id": "source-91",
+      "split": "eval",
+      "title": "Request-name exercise"
+    },
+    {
+      "content_path": "records/e206.py",
+      "content_role": "solution",
+      "content_sha256": "86b0f2781b90c1cbba14d285976f6f368bff9c55b72dbefcee9ab6da4ea3f4dc",
+      "cost": 4,
+      "id": "e206",
+      "protected": false,
+      "solution_symbols": [
+        "order_events"
+      ],
+      "source_id": "archive-26",
+      "split": "eval",
+      "title": "Event replay exercise"
+    },
+    {
+      "content_path": "records/t101.py",
+      "content_role": "solution_bundle",
+      "content_sha256": "7ae6f1a3062101b38d5288b2d9b265d76a9eee1ac157209235d8a54cdc66ec80",
+      "cost": 2,
+      "id": "t101",
+      "protected": false,
+      "solution_symbols": [
+        "clip_window",
+        "take_batch"
+      ],
+      "source_id": "archive-11",
+      "split": "train",
+      "title": "Window and batching workshop"
+    },
+    {
+      "content_path": "records/t102.py",
+      "content_role": "solution",
+      "content_sha256": "e15bb2e90f30d1526791fefba1e99d9cf622cdaa7b60d7ff9ec3f35b8359d074",
+      "cost": 10,
+      "id": "t102",
+      "protected": false,
+      "solution_symbols": [
+        "slice_group"
+      ],
+      "source_id": "archive-12",
+      "split": "train",
+      "title": "Pagination routine revision"
+    },
+    {
+      "content_path": "records/t103.md",
+      "content_role": "explanation",
+      "content_sha256": "fae4a544cdc009849c401d5cb3222821ffe26fe53bf6e1c8644fe26c43299434",
+      "cost": 3,
+      "id": "t103",
+      "protected": false,
+      "solution_symbols": [],
+      "source_id": "capture-31",
+      "split": "train",
+      "title": "Release parsing discussion"
+    },
+    {
+      "content_path": "records/t104.py",
+      "content_role": "solution",
+      "content_sha256": "f1c72fed23497566eaeec45238690f448ec933daec68dc6443bef4dd75c31ed4",
+      "cost": 5,
+      "id": "t104",
+      "protected": false,
+      "solution_symbols": [
+        "clean_tag"
+      ],
+      "source_id": "archive-14",
+      "split": "train",
+      "title": "Tag cleanup routine"
+    },
+    {
+      "content_path": "records/t105.md",
+      "content_role": "explanation",
+      "content_sha256": "e49f5df571b02f55f3dd56342603e0ab6d3ad19eaa63b3156cbc07bb74e7528f",
+      "cost": 6,
+      "id": "t105",
+      "protected": false,
+      "solution_symbols": [],
+      "source_id": "source-91",
+      "split": "train",
+      "title": "Request cache discussion"
+    },
+    {
+      "content_path": "records/t106.py",
+      "content_role": "solution",
+      "content_sha256": "86b0f2781b90c1cbba14d285976f6f368bff9c55b72dbefcee9ab6da4ea3f4dc",
+      "cost": 5,
+      "id": "t106",
+      "protected": true,
+      "solution_symbols": [
+        "order_events"
+      ],
+      "source_id": "archive-16",
+      "split": "train",
+      "title": "Event ordering reference"
+    },
+    {
+      "content_path": "records/t107.py",
+      "content_role": "solution",
+      "content_sha256": "4bc8d0be7e09f52f0019ddf5363f509c9f17e5199f975ddf0e49312f848b10a0",
+      "cost": 6,
+      "id": "t107",
+      "protected": false,
+      "solution_symbols": [
+        "clip_window"
+      ],
+      "source_id": "archive-17",
+      "split": "train",
+      "title": "Window boundary variant"
+    },
+    {
+      "content_path": "records/t108.py",
+      "content_role": "solution",
+      "content_sha256": "5b77d05074aee91208e621ac39a78948ec01cae13a6dcb4379eba0956c5be3a3",
+      "cost": 7,
+      "id": "t108",
+      "protected": false,
+      "solution_symbols": [
+        "unique_routes"
+      ],
+      "source_id": "archive-18",
+      "split": "train",
+      "title": "Route list curation"
+    }
+  ],
+  "project": "HOLDOUT",
+  "revision": 9,
+  "run_id": "2e90dc6f9f29",
+  "schema_version": 1,
+  "scope": "Draft train/eval pools; pairwise conflicts in this captured candidate graph; predeclared additive exclusion costs. Conservative export covers confirmed and unresolved candidates. It does not certify absence of undiscovered leakage or repair an already-trained model.",
+  "solution": {
+    "certificate": {
+      "checks": [
+        "integer capacities",
+        "capacity bounds",
+        "flow conservation",
+        "no residual augmenting path",
+        "flow equals cut",
+        "all active conflicts covered",
+        "protected records retained",
+        "exclusion cost equals cut"
+      ],
+      "cut_capacity": 22,
+      "cut_edges": [
+        {
+          "capacity": 2,
+          "id": 6,
+          "source": "__source",
+          "target": "record:t101"
+        },
+        {
+          "capacity": 3,
+          "id": 8,
+          "source": "__source",
+          "target": "record:t103"
+        },
+        {
+          "capacity": 6,
+          "id": 10,
+          "source": "__source",
+          "target": "record:t105"
+        },
+        {
+          "capacity": 6,
+          "id": 12,
+          "source": "__source",
+          "target": "record:t107"
+        },
+        {
+          "capacity": 1,
+          "id": 1,
+          "source": "record:e202",
+          "target": "__sink"
+        },
+        {
+          "capacity": 4,
+          "id": 5,
+          "source": "record:e206",
+          "target": "__sink"
+        }
+      ],
+      "exclusion_cost": 22,
+      "flow_edges": [
+        {
+          "capacity": 2,
+          "flow": 2,
+          "id": 6,
+          "source": "__source",
+          "target": "record:t101"
+        },
+        {
+          "capacity": 10,
+          "flow": 1,
+          "id": 7,
+          "source": "__source",
+          "target": "record:t102"
+        },
+        {
+          "capacity": 3,
+          "flow": 3,
+          "id": 8,
+          "source": "__source",
+          "target": "record:t103"
+        },
+        {
+          "capacity": 5,
+          "flow": 0,
+          "id": 9,
+          "source": "__source",
+          "target": "record:t104"
+        },
+        {
+          "capacity": 6,
+          "flow": 6,
+          "id": 10,
+          "source": "__source",
+          "target": "record:t105"
+        },
+        {
+          "capacity": 89,
+          "flow": 4,
+          "id": 11,
+          "source": "__source",
+          "target": "record:t106"
+        },
+        {
+          "capacity": 6,
+          "flow": 6,
+          "id": 12,
+          "source": "__source",
+          "target": "record:t107"
+        },
+        {
+          "capacity": 7,
+          "flow": 0,
+          "id": 13,
+          "source": "__source",
+          "target": "record:t108"
+        },
+        {
+          "capacity": 10,
+          "flow": 8,
+          "id": 0,
+          "source": "record:e201",
+          "target": "__sink"
+        },
+        {
+          "capacity": 1,
+          "flow": 1,
+          "id": 1,
+          "source": "record:e202",
+          "target": "__sink"
+        },
+        {
+          "capacity": 89,
+          "flow": 3,
+          "id": 2,
+          "source": "record:e203",
+          "target": "__sink"
+        },
+        {
+          "capacity": 8,
+          "flow": 0,
+          "id": 3,
+          "source": "record:e204",
+          "target": "__sink"
+        },
+        {
+          "capacity": 12,
+          "flow": 6,
+          "id": 4,
+          "source": "record:e205",
+          "target": "__sink"
+        },
+        {
+          "capacity": 4,
+          "flow": 4,
+          "id": 5,
+          "source": "record:e206",
+          "target": "__sink"
+        },
+        {
+          "capacity": 89,
+          "flow": 2,
+          "id": 14,
+          "source": "record:t101",
+          "target": "record:e201"
+        },
+        {
+          "capacity": 89,
+          "flow": 0,
+          "id": 15,
+          "source": "record:t101",
+          "target": "record:e202"
+        },
+        {
+          "capacity": 89,
+          "flow": 1,
+          "id": 16,
+          "source": "record:t102",
+          "target": "record:e202"
+        },
+        {
+          "capacity": 89,
+          "flow": 3,
+          "id": 17,
+          "source": "record:t103",
+          "target": "record:e203"
+        },
+        {
+          "capacity": 89,
+          "flow": 6,
+          "id": 18,
+          "source": "record:t105",
+          "target": "record:e205"
+        },
+        {
+          "capacity": 89,
+          "flow": 4,
+          "id": 19,
+          "source": "record:t106",
+          "target": "record:e206"
+        },
+        {
+          "capacity": 89,
+          "flow": 6,
+          "id": 20,
+          "source": "record:t107",
+          "target": "record:e201"
+        }
+      ],
+      "input_sha256": "108f75b6eb90137bae7ffb814502e34847a01de1e47c380c716cad71a363dce8",
+      "max_flow": 22,
+      "sentinel_capacity": 89,
+      "source_side": [
+        "__source",
+        "record:e202",
+        "record:e206",
+        "record:t102",
+        "record:t104",
+        "record:t106",
+        "record:t108"
+      ],
+      "type": "integral-maxflow-mincut",
+      "valid": true
+    },
+    "conflicts": [
+      {
+        "eval_id": "e201",
+        "id": "c401",
+        "train_id": "t101"
+      },
+      {
+        "eval_id": "e202",
+        "id": "c402",
+        "train_id": "t101"
+      },
+      {
+        "eval_id": "e202",
+        "id": "c403",
+        "train_id": "t102"
+      },
+      {
+        "eval_id": "e203",
+        "id": "c404",
+        "train_id": "t103"
+      },
+      {
+        "eval_id": "e205",
+        "id": "c406",
+        "train_id": "t105"
+      },
+      {
+        "eval_id": "e206",
+        "id": "c407",
+        "train_id": "t106"
+      },
+      {
+        "eval_id": "e201",
+        "id": "c408",
+        "train_id": "t107"
+      }
+    ],
+    "conservative": true,
+    "cost": 22,
+    "engine": "falkordb-native-maxflow",
+    "excluded": [
+      "e202",
+      "e206",
+      "t101",
+      "t103",
+      "t105",
+      "t107"
+    ],
+    "feasible": true,
+    "kept": [
+      "e201",
+      "e203",
+      "e204",
+      "e205",
+      "t102",
+      "t104",
+      "t106",
+      "t108"
+    ],
+    "module_version": "6.0.1",
+    "native_procedure": "algo.maxFlow",
+    "revision": 9,
+    "timing_ms": {
+      "certificate": 0.364,
+      "native_maxflow": 1.552,
+      "snapshot_and_compile": 3.121
+    }
+  }
+}

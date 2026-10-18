@@ -1,0 +1,43 @@
+{
+  "installation": {
+    "release": "v6.0.1",
+    "url": "https://github.com/FalkorDB/FalkorDB/releases/download/v6.0.1/falkordb-x64.so",
+    "sha256": "155b2fedd99422adfa7f2541cd0d9becabc05839cf5319ed8d604341cdae445d",
+    "source": "official FalkorDB GitHub release",
+    "platform": "linux-x86_64"
+  },
+  "capabilities": {
+    "database": "FalkorDB",
+    "module_version": 60001,
+    "module_version_text": "6.0.1",
+    "native_maxflow": true,
+    "native_procedure": "algo.maxFlow",
+    "runtime": "embedded",
+    "reason": null,
+    "capability_revision": 1
+  },
+  "smoke": {
+    "expected_cost": 3,
+    "actual_cost": 3,
+    "excluded": [
+      "A",
+      "Y"
+    ],
+    "verification": {
+      "valid": true,
+      "feasible": true,
+      "cost": 3,
+      "checks": [
+        "integer capacities",
+        "capacity bounds",
+        "flow conservation",
+        "no residual augmenting path",
+        "flow equals cut",
+        "all active conflicts covered",
+        "protected records retained",
+        "exclusion cost equals cut",
+        "certificate network matches release inputs"
+      ]
+    }
+  }
+}

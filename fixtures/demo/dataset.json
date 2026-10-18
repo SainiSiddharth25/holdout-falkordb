@@ -1,0 +1,496 @@
+{
+  "id": "holdout-workshop-v1",
+  "title": "HOLDOUT \u00b7 Code workshop candidate release",
+  "description": "Self-authored synthetic records for investigating candidate answer leakage before a new training and evaluation release. Costs are declared retention priorities; they are not measured model quality. All candidate labels begin unresolved.",
+  "policy": {
+    "id": "answer-separation-v1",
+    "conflict_rule": "An exact declared answer function, a supported alpha-normalized answer AST match, or hash-verified preservation of captured solution bytes establishes a conflict. Shared topics, source references without captures, and scaffold alone do not.",
+    "unknown_rule": "Unresolved candidates remain explicit. Conservative release verification covers them as possible conflicts.",
+    "cost_rule": "Minimize additive, predeclared exclusion costs. Protected records cannot be excluded.",
+    "solution_unit_rule": "Every solution_symbols entry is a separately solution-bearing function identified by the source adapter; other functions may be scaffolding.",
+    "lineage_rule": "DERIVED_FROM and CONTAINS assert candidate ancestry; every solution-preserving hop requires a capture manifest and verified source solution bytes. USES_SCAFFOLD never establishes solution preservation."
+  },
+  "records": [
+    {
+      "id": "t101",
+      "split": "train",
+      "title": "Window and batching workshop",
+      "cost": 2,
+      "protected": false,
+      "content_path": "records/t101.py",
+      "source_id": "archive-11",
+      "content_role": "solution_bundle",
+      "solution_symbols": [
+        "clip_window",
+        "take_batch"
+      ]
+    },
+    {
+      "id": "t102",
+      "split": "train",
+      "title": "Pagination routine revision",
+      "cost": 10,
+      "protected": false,
+      "content_path": "records/t102.py",
+      "source_id": "archive-12",
+      "content_role": "solution",
+      "solution_symbols": [
+        "slice_group"
+      ]
+    },
+    {
+      "id": "t103",
+      "split": "train",
+      "title": "Release parsing discussion",
+      "cost": 3,
+      "protected": false,
+      "content_path": "records/t103.md",
+      "source_id": "capture-31",
+      "content_role": "explanation",
+      "solution_symbols": []
+    },
+    {
+      "id": "t104",
+      "split": "train",
+      "title": "Tag cleanup routine",
+      "cost": 5,
+      "protected": false,
+      "content_path": "records/t104.py",
+      "source_id": "archive-14",
+      "content_role": "solution",
+      "solution_symbols": [
+        "clean_tag"
+      ]
+    },
+    {
+      "id": "t105",
+      "split": "train",
+      "title": "Request cache discussion",
+      "cost": 6,
+      "protected": false,
+      "content_path": "records/t105.md",
+      "source_id": "source-91",
+      "content_role": "explanation",
+      "solution_symbols": []
+    },
+    {
+      "id": "t106",
+      "split": "train",
+      "title": "Event ordering reference",
+      "cost": 5,
+      "protected": true,
+      "content_path": "records/t106.py",
+      "source_id": "archive-16",
+      "content_role": "solution",
+      "solution_symbols": [
+        "order_events"
+      ]
+    },
+    {
+      "id": "t107",
+      "split": "train",
+      "title": "Window boundary variant",
+      "cost": 6,
+      "protected": false,
+      "content_path": "records/t107.py",
+      "source_id": "archive-17",
+      "content_role": "solution",
+      "solution_symbols": [
+        "clip_window"
+      ]
+    },
+    {
+      "id": "t108",
+      "split": "train",
+      "title": "Route list curation",
+      "cost": 7,
+      "protected": false,
+      "content_path": "records/t108.py",
+      "source_id": "archive-18",
+      "content_role": "solution",
+      "solution_symbols": [
+        "unique_routes"
+      ]
+    },
+    {
+      "id": "e201",
+      "split": "eval",
+      "title": "Window inclusion exercise",
+      "cost": 10,
+      "protected": false,
+      "content_path": "records/e201.py",
+      "source_id": "archive-21",
+      "content_role": "solution",
+      "solution_symbols": [
+        "clip_window"
+      ]
+    },
+    {
+      "id": "e202",
+      "split": "eval",
+      "title": "Bounded batching exercise",
+      "cost": 1,
+      "protected": false,
+      "content_path": "records/e202.py",
+      "source_id": "archive-22",
+      "content_role": "solution",
+      "solution_symbols": [
+        "take_batch"
+      ]
+    },
+    {
+      "id": "e203",
+      "split": "eval",
+      "title": "Release label exercise",
+      "cost": 9,
+      "protected": true,
+      "content_path": "records/e203.py",
+      "source_id": "source-83",
+      "content_role": "solution",
+      "solution_symbols": [
+        "release_key"
+      ]
+    },
+    {
+      "id": "e204",
+      "split": "eval",
+      "title": "Tag normalization exercise",
+      "cost": 8,
+      "protected": false,
+      "content_path": "records/e204.py",
+      "source_id": "archive-24",
+      "content_role": "solution",
+      "solution_symbols": [
+        "clean_tag"
+      ]
+    },
+    {
+      "id": "e205",
+      "split": "eval",
+      "title": "Request-name exercise",
+      "cost": 12,
+      "protected": false,
+      "content_path": "records/e205.py",
+      "source_id": "source-91",
+      "content_role": "solution",
+      "solution_symbols": [
+        "cache_name"
+      ]
+    },
+    {
+      "id": "e206",
+      "split": "eval",
+      "title": "Event replay exercise",
+      "cost": 4,
+      "protected": false,
+      "content_path": "records/e206.py",
+      "source_id": "archive-26",
+      "content_role": "solution",
+      "solution_symbols": [
+        "order_events"
+      ]
+    }
+  ],
+  "entities": [
+    {
+      "id": "t101",
+      "kind": "record",
+      "title": "Window and batching workshop"
+    },
+    {
+      "id": "t102",
+      "kind": "record",
+      "title": "Pagination routine revision"
+    },
+    {
+      "id": "t103",
+      "kind": "record",
+      "title": "Release parsing discussion"
+    },
+    {
+      "id": "t104",
+      "kind": "record",
+      "title": "Tag cleanup routine"
+    },
+    {
+      "id": "t105",
+      "kind": "record",
+      "title": "Request cache discussion"
+    },
+    {
+      "id": "t106",
+      "kind": "record",
+      "title": "Event ordering reference"
+    },
+    {
+      "id": "t107",
+      "kind": "record",
+      "title": "Window boundary variant"
+    },
+    {
+      "id": "t108",
+      "kind": "record",
+      "title": "Route list curation"
+    },
+    {
+      "id": "e201",
+      "kind": "record",
+      "title": "Window inclusion exercise"
+    },
+    {
+      "id": "e202",
+      "kind": "record",
+      "title": "Bounded batching exercise"
+    },
+    {
+      "id": "e203",
+      "kind": "record",
+      "title": "Release label exercise"
+    },
+    {
+      "id": "e204",
+      "kind": "record",
+      "title": "Tag normalization exercise"
+    },
+    {
+      "id": "e205",
+      "kind": "record",
+      "title": "Request-name exercise"
+    },
+    {
+      "id": "e206",
+      "kind": "record",
+      "title": "Event replay exercise"
+    },
+    {
+      "id": "source-83",
+      "kind": "solution",
+      "title": "Workshop source capture 83",
+      "path": "sources/source-83.py"
+    },
+    {
+      "id": "capture-31",
+      "kind": "transformation",
+      "title": "Workshop discussion capture 31",
+      "path": "captures/capture-31.md"
+    },
+    {
+      "id": "source-42",
+      "kind": "scaffold",
+      "title": "Shared input checking helper",
+      "path": "sources/source-42.py"
+    },
+    {
+      "id": "source-91",
+      "kind": "source_reference",
+      "title": "Catalog migration reference 91",
+      "capture_state": "missing"
+    },
+    {
+      "id": "archive-11",
+      "kind": "source_reference",
+      "title": "Catalog entry archive-11"
+    },
+    {
+      "id": "archive-12",
+      "kind": "source_reference",
+      "title": "Catalog entry archive-12"
+    },
+    {
+      "id": "archive-14",
+      "kind": "source_reference",
+      "title": "Catalog entry archive-14"
+    },
+    {
+      "id": "archive-16",
+      "kind": "source_reference",
+      "title": "Catalog entry archive-16"
+    },
+    {
+      "id": "archive-17",
+      "kind": "source_reference",
+      "title": "Catalog entry archive-17"
+    },
+    {
+      "id": "archive-18",
+      "kind": "source_reference",
+      "title": "Catalog entry archive-18"
+    },
+    {
+      "id": "archive-21",
+      "kind": "source_reference",
+      "title": "Catalog entry archive-21"
+    },
+    {
+      "id": "archive-22",
+      "kind": "source_reference",
+      "title": "Catalog entry archive-22"
+    },
+    {
+      "id": "archive-24",
+      "kind": "source_reference",
+      "title": "Catalog entry archive-24"
+    },
+    {
+      "id": "archive-26",
+      "kind": "source_reference",
+      "title": "Catalog entry archive-26"
+    }
+  ],
+  "links": [
+    {
+      "source": "t103",
+      "target": "capture-31",
+      "relation": "DERIVED_FROM",
+      "evidence_path": "manifests/edge-01.json"
+    },
+    {
+      "source": "capture-31",
+      "target": "source-83",
+      "relation": "DERIVED_FROM",
+      "evidence_path": "manifests/edge-02.json"
+    },
+    {
+      "source": "e203",
+      "target": "source-83",
+      "relation": "DERIVED_FROM",
+      "evidence_path": "manifests/edge-03.json"
+    },
+    {
+      "source": "t104",
+      "target": "source-42",
+      "relation": "USES_SCAFFOLD"
+    },
+    {
+      "source": "e204",
+      "target": "source-42",
+      "relation": "USES_SCAFFOLD"
+    },
+    {
+      "source": "t105",
+      "target": "source-91",
+      "relation": "DERIVED_FROM"
+    },
+    {
+      "source": "e205",
+      "target": "source-91",
+      "relation": "DERIVED_FROM"
+    },
+    {
+      "source": "t101",
+      "target": "archive-11",
+      "relation": "DERIVED_FROM"
+    },
+    {
+      "source": "t102",
+      "target": "archive-12",
+      "relation": "DERIVED_FROM"
+    },
+    {
+      "source": "t104",
+      "target": "archive-14",
+      "relation": "DERIVED_FROM"
+    },
+    {
+      "source": "t106",
+      "target": "archive-16",
+      "relation": "DERIVED_FROM"
+    },
+    {
+      "source": "t107",
+      "target": "archive-17",
+      "relation": "DERIVED_FROM"
+    },
+    {
+      "source": "t108",
+      "target": "archive-18",
+      "relation": "DERIVED_FROM"
+    },
+    {
+      "source": "e201",
+      "target": "archive-21",
+      "relation": "DERIVED_FROM"
+    },
+    {
+      "source": "e202",
+      "target": "archive-22",
+      "relation": "DERIVED_FROM"
+    },
+    {
+      "source": "e204",
+      "target": "archive-24",
+      "relation": "DERIVED_FROM"
+    },
+    {
+      "source": "e206",
+      "target": "archive-26",
+      "relation": "DERIVED_FROM"
+    }
+  ],
+  "candidates": [
+    {
+      "id": "c401",
+      "train_id": "t101",
+      "eval_id": "e201",
+      "status": "unresolved",
+      "basis": "content_retrieval",
+      "hint": "Search retrieved a workshop bundle for this exercise. Inspect its declared answer units."
+    },
+    {
+      "id": "c402",
+      "train_id": "t101",
+      "eval_id": "e202",
+      "status": "unresolved",
+      "basis": "content_retrieval",
+      "hint": "The exercise and workshop bundle share a pagination description."
+    },
+    {
+      "id": "c403",
+      "train_id": "t102",
+      "eval_id": "e202",
+      "status": "unresolved",
+      "basis": "code_retrieval",
+      "hint": "Code retrieval found a pagination routine with different identifiers."
+    },
+    {
+      "id": "c404",
+      "train_id": "t103",
+      "eval_id": "e203",
+      "status": "unresolved",
+      "basis": "source_retrieval",
+      "hint": "A discussion capture and an exercise reference nearby workshop source entries."
+    },
+    {
+      "id": "c405",
+      "train_id": "t104",
+      "eval_id": "e204",
+      "status": "unresolved",
+      "basis": "shared_scaffold",
+      "hint": "The candidate index reports a shared input checking helper."
+    },
+    {
+      "id": "c406",
+      "train_id": "t105",
+      "eval_id": "e205",
+      "status": "unresolved",
+      "basis": "source_retrieval",
+      "hint": "A catalog reference appears in both pools; inspect the capture coverage."
+    },
+    {
+      "id": "c407",
+      "train_id": "t106",
+      "eval_id": "e206",
+      "status": "unresolved",
+      "basis": "content_retrieval",
+      "hint": "The event replay exercise retrieved an ordering reference."
+    },
+    {
+      "id": "c408",
+      "train_id": "t107",
+      "eval_id": "e201",
+      "status": "unresolved",
+      "basis": "code_retrieval",
+      "hint": "A token-based index retrieved a window-boundary routine."
+    }
+  ]
+}

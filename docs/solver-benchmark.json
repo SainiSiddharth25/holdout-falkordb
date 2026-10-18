@@ -1,0 +1,127 @@
+{
+  "kind": "solver-mechanism comparison",
+  "seed": 818,
+  "python": "3.12.14",
+  "repeats": 5,
+  "limitations": [
+    "Synthetic sparse bipartite conflicts, not a measured customer workload.",
+    "Single process and local Unix socket; server startup excluded.",
+    "Native path includes graph snapshot, temporary flow graph writes, native solve, certificate validation and cleanup.",
+    "Reference path includes graph snapshot, in-memory NetworkX graph construction and minimum cut; certificate validation is timed separately only for native.",
+    "These measurements do not compare FalkorDB against PostgreSQL, nor establish database performance superiority."
+  ],
+  "results": [
+    {
+      "records": 40,
+      "conflicts": 70,
+      "exclusion_cost": 454,
+      "equal_optimum": true,
+      "median_ms": {
+        "native_end_to_end_ms": 19.642,
+        "native_procedure_ms": 3.592,
+        "networkx_from_graph_snapshot_ms": 3.709
+      },
+      "samples_ms": {
+        "native_end_to_end_ms": [
+          19.642,
+          19.115,
+          16.951,
+          21.321,
+          47.698
+        ],
+        "native_procedure_ms": [
+          4.201,
+          3.192,
+          3.592,
+          5.906,
+          3.278
+        ],
+        "networkx_from_graph_snapshot_ms": [
+          3.709,
+          3.228,
+          4.748,
+          3.495,
+          3.928
+        ]
+      }
+    },
+    {
+      "records": 200,
+      "conflicts": 397,
+      "exclusion_cost": 2196,
+      "equal_optimum": true,
+      "median_ms": {
+        "native_end_to_end_ms": 132.449,
+        "native_procedure_ms": 14.911,
+        "networkx_from_graph_snapshot_ms": 27.198
+      },
+      "samples_ms": {
+        "native_end_to_end_ms": [
+          190.905,
+          241.913,
+          107.085,
+          107.584,
+          132.449
+        ],
+        "native_procedure_ms": [
+          43.75,
+          9.229,
+          14.911,
+          11.82,
+          18.018
+        ],
+        "networkx_from_graph_snapshot_ms": [
+          27.198,
+          31.984,
+          25.252,
+          21.88,
+          39.201
+        ]
+      }
+    },
+    {
+      "records": 800,
+      "conflicts": 1599,
+      "exclusion_cost": 8781,
+      "equal_optimum": true,
+      "median_ms": {
+        "native_end_to_end_ms": 980.249,
+        "native_procedure_ms": 27.19,
+        "networkx_from_graph_snapshot_ms": 151.808
+      },
+      "samples_ms": {
+        "native_end_to_end_ms": [
+          994.791,
+          965.473,
+          882.195,
+          1437.011,
+          980.249
+        ],
+        "native_procedure_ms": [
+          25.412,
+          26.323,
+          33.593,
+          29.263,
+          27.19
+        ],
+        "networkx_from_graph_snapshot_ms": [
+          147.576,
+          151.808,
+          154.054,
+          301.118,
+          119.675
+        ]
+      }
+    }
+  ],
+  "capabilities": {
+    "database": "FalkorDB",
+    "module_version": 60001,
+    "module_version_text": "6.0.1",
+    "native_maxflow": true,
+    "native_procedure": "algo.maxFlow",
+    "runtime": "embedded",
+    "reason": null,
+    "capability_revision": 1
+  }
+}
