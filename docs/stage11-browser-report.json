@@ -1,0 +1,13 @@
+{
+  "test_kind": "browser UI with explicit in-memory/NetworkX service adapter; NOT native/MCP/model validation",
+  "checks": [
+    "Live-agent primary button preserved",
+    "Identity is separate from answer relevance",
+    "Unavailable methods explained; exhausted action disabled",
+    "Per-split review rendered",
+    "New import uses exact policy and clears stale candidate details",
+    "Empty-pool warning visible before export",
+    "Mobile review has no horizontal overflow"
+  ],
+  "page_errors": []
+}

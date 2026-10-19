@@ -11,3 +11,9 @@ build/
 artifacts/
 *.log
 .DS_Store
+# HOLDOUT v2 generated imports and local source datasets
+imports/
+*.sqlite-wal
+
+# Generated distribution archives
+dist/downloads/

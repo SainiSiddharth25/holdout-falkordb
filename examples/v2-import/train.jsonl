@@ -1,0 +1,3 @@
+{"id":"train-A","title":"Boundary clipping solution","content":"def clip(x, low, high):\n    return max(low, min(x, high))\n","source_id":"public-workshop-2026","protected":false}
+{"id":"train-B","title":"Unrelated formatter","content":"def slug(value):\n    return value.strip().lower().replace(' ', '-')\n","source_id":"public-docs-12"}
+{"id":"train-C","title":"Utility with shared metadata","content":"def double(a):\n    return a * 2\n","source_id":"shared-tutorial"}

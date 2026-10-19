@@ -1,182 +1,301 @@
-# HOLDOUT
+# HOLDOUT Sentinel
 
-**Trace dataset leakage. Keep the evidence. Repair the release.**
+**Keep the signal. Fix the split.**
 
-HOLDOUT turns uncertain overlap between a draft training pool and a draft internal evaluation pool into a precise graph problem: **find the least-cost records to exclude so that every active conflict is covered, while keeping required records.**
+HOLDOUT Sentinel is a graph-backed investigation and release-review system for AI training and evaluation datasets. It finds potential overlaps, traces available source evidence, prioritizes investigations, and computes the minimum-cost record exclusions needed to produce a defensible dataset split. FalkorDB is the authoritative connected-data layer and executes the native maximum-flow computation behind each certified repair.
 
-An investigator selects evidence tools through MCP. FalkorDB stores the records, provenance, candidate decisions and tool events, then runs native `algo.maxFlow` for an exact weighted bipartite vertex-cover reduction. HOLDOUT writes revised, self-contained training/evaluation manifests and checks a flow/cut certificate plus the original source evidence.
+The application also maintains evidence-bound investigation memory, coordinates specialized workers through graph-backed tasks, checks release decisions against an organizational policy graph, and detects when changing inputs invalidate a previously reviewed release.
 
-**Hackathon target: Track 1 — agents using graph queries, multihop evidence and graph algorithms to take a verifiable action.**
+> **Scope:** HOLDOUT repairs *draft dataset manifests*. It does not remove information from an already-trained model, prove that every possible contamination case was discovered, or authenticate production organizational approvals.
 
-## What works
+## Why HOLDOUT?
 
-- Actual FalkorDB **6.0.1** native max-flow, with a capability probe that fails explicitly if the procedure is missing.
-- Seven domain MCP tools; both the deterministic investigator and live model use actual MCP client/server sessions.
-- Exact solution-function comparison, bounded identifier-normalized AST comparison, and graph-returned provenance supported by captured bytes and hash-bound transformation receipts.
-- Separate confirmed-only lower bounds and conservative upper bounds. Unknown evidence remains unknown.
-- Protected records, zero-cost records, infeasibility handling, stale-revision rejection and independent certificate checking.
-- Verified `train.jsonl`, `eval.jsonl` and `repair.json` exports, including original content and SHA-256 hashes.
-- A local interactive review interface and a hosted **recorded-run** review. Replay is explicitly labeled and does not pretend to call a model or database.
+AI benchmarks can be misleading when an evaluation answer has already appeared in training material. A straightforward duplicate check may miss renamed code or solution content passed through multiple transformations. Conversely, aggressively excluding everything that looks similar can waste valuable examples.
 
-The bundled data is entirely self-authored synthetic evidence. No paid dataset, model key or Docker installation is needed for the tested Linux setup.
+HOLDOUT separates three questions:
 
-## Start locally
+1. **What do we know?** Discover candidate conflicts and investigate them using captured source code and provenance.
+2. **What should change?** Find the least-cost combination of exclusions that covers confirmed and unresolved conflicts under a declared policy.
+3. **Can this release be used?** Verify the output against the evidence, identify relevant organizational requirements, and prevent actions on a stale watched snapshot.
 
-The tested setup is **Linux x86-64, Python 3.12, and an Ubuntu 24.04-compatible runtime**. On Windows, run these commands inside an appropriate WSL Linux distribution.
+Designed for ML engineers, benchmark maintainers, AI research teams, and developers working on reproducible dataset releases.
 
-From the extracted `holdout` directory:
+## Features
 
-```bash
-python3.12 -m venv .venv
-source .venv/bin/activate
-python -m pip install -r requirements-lock.txt
-python -m pip install --no-deps -e .
-python -m holdout doctor --install-native-module
-python -m holdout serve
-```
+| Capability | What it does |
+| --- | --- |
+| Dataset import | Load local JSONL, JSON, CSV, or Parquet training/evaluation records. |
+| Candidate discovery | Propose overlaps using content hashes, code fingerprints, normalized Python ASTs, token shingles, and source references. Discovery does not assign leakage verdicts. |
+| Git capture | Produce read-only snapshots of tracked Python files, Git blob IDs, commits, and bounded same-path history from a local checkout. |
+| Evidence investigation | Distinguish **confirmed**, **rejected**, and **unresolved** claims using bounded code comparisons and hash-verified captured provenance. |
+| Graph-guided planning | Run native FalkorDB counterfactual solves to rank unresolved claims by their possible effect on the optimal repair. |
+| Verified repair | Solve weighted bipartite vertex cover through native `algo.maxFlow`; independently validate the resulting flow/cut certificate. |
+| Agent memory | Store episodic, semantic, and procedural findings linked to evidence receipts; revalidate findings before reuse. |
+| Specialist coordination | Coordinate deterministic code and provenance workers using FalkorDB task claims, leases, fencing tokens, and handoffs. |
+| Organization context | Trace synthetic dataset owners, policies, source decisions, and review eligibility; keep technical correctness independent of approvals. |
+| Source monitoring | Watch a local train/eval JSONL pair, report changes and directly affected candidates, block stale-release actions, and require explicit snapshot promotion. |
 
-Open **http://127.0.0.1:8000**. Click **Run deterministic policy** to execute a fresh investigation, inspect the conflict graph, and download the verified release.
+## Quick start
 
-The setup downloads a checksum-pinned official FalkorDB module. The installed `falkordblite` package supplies the Redis executable, but its bundled older module lacks the required algorithm. The engine starts on a private Unix socket with no TCP database listener. The current module installer supports Linux x86-64; other platforms can connect to a compatible external server using `HOLDOUT_FALKORDB_URL`.
+**Requirements:** Docker with Docker Compose, sufficient space for the image, and an available localhost port. The container uses Ubuntu 24.04 and installs Python and the bundled native FalkorDB runtime; **Python 3.12 is not required on the host**.
 
-If `python3.12 -m venv` is unavailable, install your distribution's Python 3.12 venv support first. The application requires ordinary permission to create a local Unix socket.
-
-### Existing FalkorDB server
+From the repository root (the directory containing `compose.yaml`):
 
 ```bash
-export HOLDOUT_FALKORDB_URL='redis://127.0.0.1:6379'
-python -m holdout doctor
-python -m holdout serve
+cp .env.example .env
+docker compose -p holdout-sentinel --env-file .env up -d --build
 ```
 
-The capability probe must report `native_maxflow: true`. HOLDOUT creates UUID-scoped release and temporary flow graphs; it never flushes a server or stops an external server. See [engine details](docs/engine.md).
+Open **http://127.0.0.1:8100**.
 
-### Docker alternative
+The default `.env.example` sets `HOLDOUT_HOST_PORT=8100`. Change it if that port is occupied. The HTTP server listens on port `8000` *inside* the container and is mapped to loopback on your machine.
+
+No API key is needed to use **Run deterministic policy**, **Run graph-guided**, or **Run coordinated agents**. The **Run live agent** button requires a configured model provider.
+
+To inspect container output:
 
 ```bash
-docker compose up --build
+docker compose -p holdout-sentinel --env-file .env logs -f --tail=50 holdout
 ```
 
-Then open http://127.0.0.1:8000. The provided container recipe uses the same pinned module and Python dependencies. **Docker was unavailable in the development environment, so this recipe is supplied but was not executed here.** The Python/WSL path above was validated on Linux; WSL itself was not available for a separate platform test.
-
-## Reproduce the recorded demonstration
+To stop the service while preserving its named runtime volume:
 
 ```bash
-python -m holdout demo --output dist/demo-run.json
-python -m holdout verify examples/verified-release --fixture fixtures/demo/dataset.json
-python -m pytest -q
+docker compose -p holdout-sentinel --env-file .env down
 ```
 
-`demo` runs the real native engine and MCP investigator, stages manifests, and captures the intermediate states. It prints the new release directory. The checked-in `examples/verified-release` is the verified release that accompanies the bundled capture.
+Avoid `down -v` if you want to preserve saved investigations.
 
-`verify` needs neither a running database nor a model. With `--fixture`, it replays evidence assessments against the original captured artifacts as well as checking the mathematical certificate. Without that argument, it checks bundle consistency and optimality for the problem recorded in the receipt. Receipts use hashes, not digital signatures; retain the original fixture independently when evidence authenticity matters.
+### Optional: live LLM through Requesty
 
-## The actual demo result
+Edit your **local** `.env` file (never commit a real key):
 
-The fixture contains **8 training records, 6 evaluation records and 8 candidate conflicts**. Both pools have predeclared exclusion costs. Two records are required.
+```dotenv
+OPENAI_API_KEY=YOUR_REQUESTY_KEY
+HOLDOUT_MODEL=openai/gpt-6.1-sol
+HOLDOUT_API_BASE=https://router.requesty.ai/v1
+HOLDOUT_API_MODE=responses
+HOLDOUT_REASONING_EFFORT=low
+HOLDOUT_MAX_PROVIDER_CALLS=24
+HOLDOUT_MAX_TOOL_CALLS=36
+HOLDOUT_MAX_TOKENS=100000
+```
 
-| Quantity | Before investigation | After investigation |
-|---|---:|---:|
-| Confirmed candidates | 0 | 5 |
-| Rejected candidate claims | 0 | 1 |
-| Unresolved candidates | 8 | 2 |
-| Confirmed-only minimum cost | 0 | 10 |
-| Conservative minimum cost | 27 | 22 |
-| Records retained conservatively | 7 | 8 |
+The `OPENAI_API_KEY` variable is the application's provider credential field; it can contain a Requesty key. The model ID must be available for your account. The application supports `responses` and `chat_completions` adapters for compatible providers.
 
-The final conservative repair excludes `t101`, `e202`, `t103`, `e206`, `t105` and `t107`. It retains eight records, including required records `t106` and `e203`. Resolving the shared-scaffold claim saves **5 predeclared cost units**. This measures this fixture's retention objective, not model accuracy, money, or general contamination-detection quality.
-
-The two remaining unknowns concern missing source evidence and code with a meaningful operator difference. Their endpoints are covered in the conservative release. The cost-10 confirmed-only solution is a **lower bound**, not an export that can ignore those unknowns.
-
-## Turn on a live model investigator
-
-The live investigator supports **Responses** and **Chat Completions** tool interfaces. Current GPT-6 Astra and GPT-6.1 Sol tool calling requires Responses. For an OpenAI setup, create a local `.env` from `.env.example`, add your key, and use the included Responses configuration. See [the live-agent setup guide](docs/live-agent-setup.md).
+Apply changed values by recreating the container with the existing image:
 
 ```bash
-export OPENAI_API_KEY='your-provider-key'
-export HOLDOUT_MODEL='gpt-6.1-sol'
-export HOLDOUT_API_MODE='responses'
-export HOLDOUT_REASONING_EFFORT='low'
-export HOLDOUT_MAX_OUTPUT_TOKENS=4096
-export HOLDOUT_MAX_TOKENS=100000
-python -m holdout serve
+docker compose -p holdout-sentinel --env-file .env up -d --no-build --force-recreate
 ```
 
-The UI then displays the separate live-model control. The model chooses among the same MCP tools; it cannot assign arbitrary evidence verdicts, execute supplied code, issue arbitrary Cypher, or choose output paths. Credentials stay on the backend. An existing server must be restarted after changing its environment. The Python CLI does not automatically load `.env`; explicitly load that trusted file with `set -a`, `source .env`, and `set +a` before starting it.
+The browser does not receive the provider credential. Live-model calls may incur provider charges; provider, tool, token, and elapsed-time budgets are configured in `.env`.
 
-Responses mode sends `store: false` and carries forward response output items, including encrypted reasoning state and function-call IDs. Each function output goes back through the matching `call_id`. Truncated or failed responses stop before tool execution. For another provider with a Chat Completions-compatible tool endpoint, set `HOLDOUT_API_MODE=chat_completions`, set `HOLDOUT_API_BASE` to its base URL ending at `/v1`, and choose a model that supports function tools and `max_completion_tokens`. `HOLDOUT_REASONING_EFFORT` applies only to Responses mode. For backward compatibility, code launched without an explicit API mode uses Chat Completions.
+## Try it
 
-Limits are configurable in `.env.example`: provider calls, tool calls, per-response output tokens, a conservative input/output token reservation, and elapsed time. The example allows 100,000 accounted tokens for a run; the code default without that setting remains 24,000. Elapsed time is a stopping budget; an in-flight native operation may complete. Provider usage is used when supplied and conservatively estimated otherwise. Provider-specific hidden billing is not a guaranteed hard cap.
+### 1. Investigate a controlled example
 
-**No real provider key was available during development.** Live tool-call orchestration, malformed/unknown tools and budget behavior are tested using a mocked HTTP provider over genuine MCP sessions. The included demo uses the deterministic policy. No claim of live-model effectiveness or quality is made.
+1. Open the local dashboard and select **Load sensitivity example**.
+2. Select **Calculate priorities** to see how hypothetically confirming or rejecting uncertain claims changes the current optimization bounds.
+3. Select **Run graph-guided** for a no-key investigation, or **Run live agent** to let a model select MCP tools.
+4. Open candidate details to inspect source comparisons, graph paths, evidence-method applicability, and unresolved reasons.
+5. Select **Stage & verify release**. Review the retained record counts **for each split**, the selected exclusions, and the verification report.
 
-## Connect another MCP client
+The bundled sensitivity example is designed to show that investigating the right claim can materially lower the conservative exclusion cost. A counterfactual plan is **not** a verdict; actual evidence checks must produce the change.
 
-From the project directory:
+### 2. Import your own local datasets
+
+In the Import panel, choose separate training and evaluation files and set both policies **before** investigating:
+
+- **Conflict policy:** `answer_leakage` (bounded solution evidence) or `exact_record` (byte-identical whole records).
+- **Preservation policy:** `equal`, `balanced`, `eval_first`, or `train_first` (declared exclusion weights).
+
+A minimal JSONL input row looks like:
+
+```json
+{"id":"sample-001","title":"Clipping function","content":"def clip(x, low, high):\n    return max(low, min(x, high))\n","source_id":"workshop-2026","protected":false}
+```
+
+Each split uses its own file. Optional attributes include `solution_symbols` for identifying answer-bearing functions and source-reference fields such as `derived_from` or `parent_ids`. The importer may infer a single standalone Python function as solution-bearing; complex modules generally need explicit `solution_symbols` to support function-level checks.
+
+`source_id` and similar metadata are *candidate lineage hints*, **not** proof that a solution was preserved. Inputs must be authorized to use; repository files and source text are treated as evidence, not executable instructions.
+
+For larger inputs, the CLI prepares a local snapshot before starting the investigation:
 
 ```bash
-python -m holdout mcp
+python -m holdout prepare \
+  --train train.jsonl --eval eval.jsonl \
+  --policy equal --separation-policy answer_leakage \
+  --output imported-release
 ```
 
-For a client configuration, set `command` to the absolute path of `.venv/bin/python`, `args` to `["-m", "holdout", "mcp"]`, and `cwd` to the absolute project directory. Diagnostics stay off the MCP stdout channel.
+This CLI requires the project's Python 3.12 environment and dependencies. The Docker-backed browser import is the simplest option for a standard installation; it has a request-size limit.
 
-Tools:
+### 3. Monitor source changes
 
-| Tool | Purpose |
-|---|---|
-| `release_status` | Current evidence counts, lower/upper repairs and a heuristic next candidate |
-| `list_candidates` | Candidate hypotheses, evidence and attempted methods |
-| `inspect_record` | Bounded captured source and content hashes |
-| `trace_provenance` | FalkorDB multihop paths and provenance metadata |
-| `investigate_candidate` | Deterministically derive and record a bounded evidence verdict |
-| `solve_release` | Exact native max-flow plus checked min-cut certificate |
-| `stage_release` | Write and verify a conservative release at the current revision |
+The Compose configuration mounts `watch-inputs/` read-only inside the container. The watcher reads **`watch-inputs/train.jsonl`** and **`watch-inputs/eval.jsonl`** on a local polling interval (15 seconds by default).
 
-The MCP server can also run on loopback HTTP:
+1. In **Sentinel · Source change watch**, choose **Check sources now**.
+2. Review the digest and select **Promote reviewed snapshot** to activate that pair as a new run.
+3. Investigate and stage a verified repair.
+4. Modify a record in a watched file while keeping its stable `id`; check sources again.
+5. Sentinel displays added/removed/modified records and directly affected existing conflict edges. The active watched release is marked stale and new evidence/release/review actions are blocked.
+6. Review and promote the new snapshot to start a fresh investigation. Historical verdicts and approvals are **not** silently carried forward.
 
-```bash
-python -m holdout.mcp_server --transport streamable-http --port 8001
+Watching is automatic; **promotion and reinvestigation require explicit action**. This version monitors a fixed local pair, not GitHub or Hugging Face endpoints directly.
+
+## Architecture and FalkorDB data model
+
+```mermaid
+flowchart TD
+    I[Local datasets and Git captures] --> D[Candidate discovery]
+    D --> G[(FalkorDB evidence graph)]
+    G <--> A[Investigator via MCP]
+    G --> P[Counterfactual repair planner]
+    A --> V[Evidence receipts and memory]
+    V --> G
+    P --> O[Native max-flow / min-cut]
+    G --> O
+    O --> R[Verified manifests and receipt]
+    R --> C[Organization policy gate]
+    S[Local source watcher] --> G
+    S --> C
 ```
 
-Each standalone server owns a run. The browser's built-in agents use MCP memory streams to the browser backend's same service, so they investigate the run visible in the UI. This is a protocol connection, not direct function-call simulation.
+FalkorDB is **not an optional graph visualization**. It stores the authoritative connected investigation state, serves bounded provenance queries, coordinates work, links evidence memories to their receipts, resolves organization paths, and runs the capacity-network optimization. The client UI is a projection of that state.
 
-## Why the graph is central
+### Important node types
 
-The provenance graph answers which solution-bearing artifacts survived a chain of transformations. Captured evidence supports each hop; a shared ancestor name alone does not confirm leakage.
+| Nodes | Role |
+| --- | --- |
+| `Record` (also labelled `Entity`) | Captured training/evaluation records, content identity, costs, and required-retention flags. |
+| `Candidate` | One suspected cross-split conflict and its evidence verdict. |
+| `Entity` | Source files, Git captures, and related provenance artifacts. |
+| `ReleaseMeta`, `Event` | Active run, evidence revision, decisions, and investigation activity. |
+| `EvidenceReceipt`, `Memory` | Evidence-bound episodic, semantic, and procedural memory. |
+| `InvestigationTask` | Specialist assignment, leased claims, and handoff state. |
+| `OrgProject`, `OrgDataset`, `OrgPerson` | Synthetic organizational context and dataset ownership. |
+| `OrgPolicy`, `OrgDecision`, `OrgPolicySelection`, `OrgApproval` | Sourced policies, selected review criteria, and local demonstration attestations. |
 
-The conflict graph is a separate bipartite projection with fixed train/eval roles. Its weighted vertex-cover reduction gives an exact optimum under the declared constraints. The returned native flow is converted into a residual cut using **all original capacities**, including zero-flow edges omitted from the procedure's positive-flow output. A feasible flow and an equal-cost cut are the auditable optimality witness.
+**Important relationships:** `TRAIN`, `EVAL`, `DERIVED_FROM`, `CONTAINS`, `USES_SCAFFOLD`, `ABOUT`, `SUPPORTED_BY`, `FOR_CANDIDATE`, `HAS_DATASET`, `OWNED_BY`, `JUSTIFIED_BY`, and `ABOUT_TECHNICAL_RELEASE`.
 
-FalkorDB also stores candidate updates and tool events. The agent moves between graph exploration, evidence assessment, optimization and manifest creation. The value demonstrated here is a coherent, inspectable workflow and an exact reduction. See [architecture and proof](docs/architecture.md) and [representative Cypher](docs/queries.cypher).
+### Core Cypher and graph algorithm
 
-## Baselines and performance
+Retrieve bounded provenance paths:
 
-```bash
-python scripts/benchmark_solver.py --repeats 5
-python scripts/benchmark_investigation.py
+```cypher
+MATCH p=(r:Entity {id:$id})-[:DERIVED_FROM|CONTAINS|USES_SCAFFOLD*0..8]->(n)
+RETURN [x IN nodes(p) | x.data],
+       [x IN relationships(p) | x.data]
+LIMIT 5001;
 ```
 
-The bounded solver comparison uses actual FalkorDB and an explicit NetworkX reference over the same graph snapshot. All measured optimum costs agree. On the recorded 40/200/800-record cases, the complete native path is **slower** than NetworkX, including temporary-network upload and certificate checking. Procedure-only time is reported separately. This does not demonstrate a database speedup, and the NetworkX baseline is never an application fallback.
+Run maximum flow on a temporary, release-scoped capacity graph:
 
-The investigation ablation compares no investigation, exact checks, exact-plus-AST checks, and the full deterministic MCP tool policy against the same synthetic hypotheses and costs. It measures evidence resolution and retention value, not live LLM intelligence. See the machine-readable reports in `docs/` and [validation scope](docs/validation.md).
+```cypher
+MATCH (s:Flow {key:'__source'}), (t:Flow {key:'__sink'})
+CALL algo.maxFlow({
+  sourceNodes:[s], targetNodes:[t],
+  relationshipTypes:['CAPACITY'], nodeLabels:['Flow'],
+  capacityProperty:'capacity'
+})
+YIELD edges, edgeFlows, maxFlow
+RETURN maxFlow, [e IN edges | id(e)], edgeFlows;
+```
 
-## Project map
+These are representative queries. The application builds UUID-scoped flow graphs and parameterizes inputs. See [`docs/queries.cypher`](docs/queries.cypher), [`docs/architecture.md`](docs/architecture.md), and the implementation in [`holdout/optimizer.py`](holdout/optimizer.py) and [`holdout/graph.py`](holdout/graph.py).
+
+### Why minimum cut?
+
+For a fixed train/eval partition, every active conflict `(t, e)` requires the exclusion of at least one endpoint. With additive exclusion weights, this is **minimum-weight bipartite vertex cover**:
 
 ```text
-holdout/       Python service, evidence tools, native solver, agents, HTTP and MCP
-fixtures/      Self-authored source captures, candidates and transformation evidence
-dist/          Buildless review UI and actual recorded execution
-examples/      Verified training/evaluation manifests and repair receipt
-tests/         Evidence, optimizer, certificate, MCP, provider and API checks
-scripts/       Native setup/probe and reproducible benchmarks
-docs/          Problem statement, architecture, runtime and validation reports
+minimize    sum(cost[v] * excluded[v])
+subject to  excluded[t] + excluded[e] >= 1  for every active conflict
+            excluded[v] = 0                for protected records
 ```
 
-## Scope and next evaluation
+HOLDOUT reduces the problem to a source → training → evaluation → sink network. Capacities on source/train and evaluation/sink arcs encode record costs; large-capacity train/eval arcs encode conflict constraints. It invokes FalkorDB's native `algo.maxFlow`, derives the residual minimum cut, and independently checks flow conservation, conflict coverage, retained protected records, and agreement between flow, cut, and exclusion cost.
 
-HOLDOUT currently accepts an explicit candidate catalog. Candidate discovery across a large corpus, approximate semantic similarity, multiple dataset partitions, quotas, group exclusions and non-additive objectives are outside this exact formulation. A normalized AST match is a bounded structural equality claim, not arbitrary semantic equivalence. Rejecting a scaffold-based candidate does not prove all possible independence.
+Two optimizations expose uncertainty:
 
-Use this workflow before releasing draft training/evaluation pools. It does not undo training exposure, certify a public benchmark's integrity, or establish that no unobserved conflict exists. Broader split optimization such as [DataSAIL](https://www.nature.com/articles/s41467-025-58606-8) addresses a different, more general problem.
+- **Confirmed-only lower bound:** covers established conflicts.
+- **Conservative optimum:** covers established **and unresolved** conflicts; this is the only policy eligible for release export.
 
-A next empirical milestone is a licensed external corpus with independently adjudicated candidate pairs, explicit false-negative measurement and a real-model tool-policy comparison. The project does not fabricate that evaluation.
+Read-only counterfactual solves estimate the possible savings from rejecting a candidate and the lower-bound change from confirming it. The planner ranks investigations using declared method-effort proxies; it does not know the probability of either outcome or guarantee globally optimal information acquisition.
 
-MIT-licensed project source; see `LICENSE`. Third-party engines and packages retain their own licenses.
+## Investigation modes
+
+| Mode | Role | Model key? |
+| --- | --- | --- |
+| **Run live agent** | One LLM investigator chooses domain MCP tools, reviews evidence, consults memory and planning, and stages a verified repair. | Yes |
+| **Run graph-guided** | Deterministic MCP investigator selects claims using certified counterfactual repair effects. | No |
+| **Run coordinated agents** | Two deterministic MCP specialists (code and provenance) claim tasks, hand off work, and share evidence-bound state. | No |
+| **Run deterministic policy** | Reproducible evidence-first investigation baseline. | No |
+
+Specialist coordination is **not two concurrent LLM model sessions**. Evidence tools derive verdicts; neither an LLM nor a remembered procedure can set a supported verdict by assertion.
+
+## Outputs and verification
+
+A successful repair writes:
+
+| Artifact | Description |
+| --- | --- |
+| `train.jsonl` | Retained training examples, preserving their captured content. |
+| `eval.jsonl` | Retained evaluation examples, preserving their captured content. |
+| `repair.json` | Candidate verdicts, exclusions, costs, evidence receipts, policy bindings, manifest hashes, and a flow/min-cut certificate. |
+
+Verification checks complete partitioning, protected-record retention, active conflict coverage, preserved content, declared costs, hashes, and optimality. When independently retained source evidence is provided, it also replays the supported evidence checks. A self-contained hash is a **consistency check, not a cryptographic signature**.
+
+Standalone checks:
+
+```bash
+python -m holdout verify path/to/release --fixture path/to/original/dataset.json
+python -m holdout verify-plan path/to/planning-report.json --fixture path/to/original/dataset.json
+```
+
+They require an installed Python environment, but do not call an LLM or FalkorDB.
+
+## Organization review
+
+HOLDOUT connects a verified technical repair to a **synthetic** project, dataset-owner relationships, source-linked policies, and local review decisions. A policy may require minimum retained counts per split or a reviewer before a release can be considered eligible. Changing a policy can block a previously eligible repair **without altering its technical optimum**.
+
+The local review selector is for demonstration only; it is **not an authenticated approval, signature, identity provider, or production authorization system**. The LLM can read organizational context but cannot grant an approval.
+
+## Testing
+
+Run the included test suite inside the configured Docker container:
+
+```bash
+docker compose -p holdout-sentinel --env-file .env exec -T holdout \
+  /app/.venv/bin/python -m pytest -q
+```
+
+The source package contains offline contract tests and native FalkorDB/MCP tests. Check the test output for the actual result on your platform; **native acceptance and production-scale throughput are not claimed solely from offline test results**.
+
+## Limitations and operating boundaries
+
+- Candidate generation is a bounded retrieval process, **not an exhaustive proof that no leakage exists**. Similarity and source references are hypotheses; absent or unsupported provenance remains unknown.
+- Python normalized-AST comparison supports a restricted subset; arbitrary semantic equivalence, code execution and complete transformation lineage are out of scope.
+- The exact minimum-cut guarantee applies to **two fixed dataset pools, pairwise cross-pool conflicts, predeclared additive costs, and protected records**. It does not enforce arbitrary split quotas or automatically generate replacements. A mathematically optimal repair may leave a pool empty; review the per-split counts and governance gate.
+- Investigation memory is evidence-bound and scoped to the active release. Coordinated workers operate in a single local service, not a distributed multi-tenant cluster.
+- Organization policies and reviewer identities are synthetic. Do not use the local approval controls as production security boundaries.
+- Monitoring supports a fixed pair of **local JSONL files**. Change impact covers direct candidate relationships; new snapshot promotion rebuilds the graph and requires renewed investigation. External repository polling and incremental flow maintenance are not implemented.
+- The service is intended to be run **locally** and bound to loopback. Do not expose its unauthenticated demo endpoints or import restricted/private datasets without additional security controls.
+- No general FalkorDB speed advantage over capable in-memory or relational alternatives is claimed. Correctness, evidence traceability, and graph-backed actions are the current demonstrated design goals.
+
+## Hackathon alignment
+
+HOLDOUT Sentinel brings three complementary graph-backed workflows into one product:
+
+- **Agents That Act on Connected Data:** provenance investigation, MCP tool selection, native graph optimization, and verified release actions.
+- **Agent Memory and Coordination:** receipt-bound memory, safe procedure suggestions, task claims, and specialist handoffs.
+- **Company Brain:** project and dataset ownership, policy provenance, and release-governance decisions based on actual retained records.
+
+## License
+
+See [LICENSE](LICENSE) for licensing terms.
+
+---
+
+**HOLDOUT Sentinel — Keep the signal. Fix the split.**

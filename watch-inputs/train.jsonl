@@ -1,0 +1,5 @@
+{"id": "multi", "title": "Two-function utility module", "content": "def clip(x):\n    return max(0, min(x, 99))\n\ndef square(x):\n    return x * x\n"}
+{"id": "class", "title": "Class-only record", "content": "class Counter:\n    def __init__(self):\n        self.value = 0\n    def increment(self):\n        self.value += 1\n"}
+{"id": "scaffold", "title": "Explicit scaffold, not an answer", "content_role": "scaffold", "content": "# Input scaffold, not an answer\ndef read_lines(text):\n    return text.splitlines()\n"}
+{"id": "answer", "title": "Declared offset answer", "solution_symbols": ["add_offset"], "content": "def add_offset(value):\n    return value + 37\n"}
+{"id": "source", "title": "Missing source claim A", "content_role": "explanation", "source_id": "missing-source-ref", "content": "An upstream source was referenced by this record. The original capture is not present."}

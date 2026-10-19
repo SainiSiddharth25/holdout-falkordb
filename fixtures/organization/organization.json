@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "synthetic": true,
+  "project": {
+    "id": "project-synthetic-coding",
+    "title": "Sample Coding-Agent Research"
+  },
+  "datasets": [
+    {
+      "id": "training-corpus",
+      "title": "Training candidates",
+      "split": "train",
+      "owner_id": "person-arjun"
+    },
+    {
+      "id": "evaluation-benchmark",
+      "title": "Evaluation benchmark",
+      "split": "eval",
+      "owner_id": "person-mira"
+    }
+  ],
+  "people": [
+    {
+      "id": "person-arjun",
+      "display_name": "Arjun \u2014 Synthetic Training Owner",
+      "role": "training_owner"
+    },
+    {
+      "id": "person-mira",
+      "display_name": "Mira \u2014 Synthetic Evaluation Owner",
+      "role": "evaluation_owner"
+    }
+  ],
+  "policies": [
+    {
+      "id": "research_review",
+      "title": "Research release review",
+      "reviewer_role": "evaluation_owner",
+      "min_train_retained": 1,
+      "min_eval_retained": 1,
+      "auto_approve_cost": 0,
+      "always_review": false
+    },
+    {
+      "id": "benchmark_strict",
+      "title": "Protected benchmark review",
+      "reviewer_role": "evaluation_owner",
+      "min_train_retained": 1,
+      "min_eval_retained": 2,
+      "auto_approve_cost": 0,
+      "always_review": true
+    },
+    {
+      "id": "sandbox",
+      "title": "Local sandbox (nonproduction)",
+      "reviewer_role": "evaluation_owner",
+      "min_train_retained": 0,
+      "min_eval_retained": 0,
+      "auto_approve_cost": 100,
+      "always_review": false
+    }
+  ],
+  "default_policy": "research_review",
+  "decisions": [
+    {
+      "id": "decision-research",
+      "policy_id": "research_review",
+      "source_path": "policies/ORG-DATA-07.md",
+      "source_sha256": "7b3a90a07279d6eb4bf69b27fd263bd009ad43271e76230071f0d4bdb61bd9e7"
+    },
+    {
+      "id": "decision-benchmark",
+      "policy_id": "benchmark_strict",
+      "source_path": "policies/ORG-BENCH-12.md",
+      "source_sha256": "062dbcc6e402de506ec64be782339dd2565c22ba07d79c5940563913401370a8"
+    },
+    {
+      "id": "decision-sandbox",
+      "policy_id": "sandbox",
+      "source_path": "policies/ORG-SANDBOX-01.md",
+      "source_sha256": "fd3cf18a27a00065437e5153aead900f4b6c085b9605d39baa891e23af9a63af"
+    }
+  ]
+}

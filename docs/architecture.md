@@ -1,3 +1,15 @@
+# Stage 2 architecture addendum
+
+Stage 2 adds `planning.py` and `optimizer.solve_counterfactual`. Hypothetical inputs never mutate Candidate verdicts or the authoritative release cache. All nontrivial scenario solves use the same native max-flow path. A revision-bound plan cache stores full certificates separately from evidence; HTTP/MCP only expose bounded summaries until a report is requested. Page polling never recomputes counterfactuals. `graph_guided` is an additional deterministic policy; the original endpoint-heuristic policy remains for comparison. The LLM has an eighth tool, `plan_investigation`, and bounded summaries rather than full scenario networks in its context. See [Stage 2](STAGE2_ACTIVE_INVESTIGATION.md).
+
+The description below records earlier-stage architecture and baseline behavior. Where it mentions seven tools or the endpoint heuristic, that is the retained baseline, not the new planner.
+
+# Stage 1.1 architecture addendum
+
+This file's original algorithm/provenance description below is retained as the baseline. New imports also carry an immutable `separation_policy`, stored on `ReleaseMeta` and bound into schema-2 release receipts. `record_identity` checks complete captured bytes; it confirms/rejects exact-only candidates but remains an observation under answer-leakage policy. New `review.py` exposes method applicability and split retention without introducing a replacement solver. `verify_release` recomputes the release review. Historical schema-1 receipts remain readable. See [Stage 1.1 contracts](STAGE1_1_EVIDENCE_REVIEW.md) for scope and compatibility.
+
+---
+
 # Architecture and correctness
 
 ## Evidence-to-action loop
@@ -60,3 +72,11 @@ Offline verification without the original fixture is explicitly labeled mathemat
 The deterministic policy is reproducible and independent of credentials. The optional live policy uses an operator-configured Responses or Chat Completions tool endpoint and genuine MCP sessions. Responses mode uses stateless requests, retains every returned output item for continuity, and matches function results to their call IDs. It validates a completed response before any tool action and requires a verified release plus final text to finish. Local reservations and call limits bound continued spending; the elapsed-time limit stops new work, while an in-flight operation can finish. Actual live-provider behavior is not claimed to have been tested. Setup and primary API references are in `live-agent-setup.md`.
 
 The hosted static interface contains captured real states and exports. It explicitly says **Recorded run**. A local backend connection enables real investigation and release actions. The static deployment has no FalkorDB connection or model credentials.
+
+## v2 import and source-reference graph
+
+The new import step precedes the unchanged evidence investigation. `holdout.ingest` accepts two local JSONL/JSON/CSV inputs and writes a new snapshot (`dataset.json` plus content files). User IDs are retained as metadata while internal IDs are unique across the two pools. Candidate discovery uses indexed exact content/function fingerprints, bounded normalized Python AST, five-token shingle similarity, and shared imported source references. All discovered candidates begin `unresolved`.
+
+If input metadata includes `source_id`, `parent_id`, `derived_from`, or `parent_ids`, the importer creates `Entity` nodes with `kind:unverified_source_reference` and `DERIVED_FROM` relationships. **These are hints about possible ancestry, not trusted proof of answer preservation.** Unlike the curated demo, imported metadata alone has no captured, hash-bound edge manifests; the original `assess_lineage` checks therefore cannot confirm such paths without independently acquired captures. The application never fabricates missing sources or follows external URLs.
+
+Per-record costs are assigned from one approved policy (`equal`, `balanced`, `eval_first`, `train_first`) before graph seeding. `protected` remains an input flag. After seeding, evidence checks, FalkorDB's native `algo.maxFlow` reduction, and receipt verification are unchanged. The optimized release remains scoped to **the discovered candidate graph**, which is not exhaustive.

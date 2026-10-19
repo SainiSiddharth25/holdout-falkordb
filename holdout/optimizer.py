@@ -118,12 +118,40 @@ def _certify(records: dict, conflicts: list[dict], edges: list[dict], positive_i
 
 
 def solve(store: GraphStore, conservative: bool = False) -> dict:
+    """Solve authoritative evidence only; never pass a planner scenario to export."""
+    revision = store.revision()
+    return _solve_snapshot(store, store.records(), store.candidates(), conservative, revision)
+
+
+def solve_counterfactual(store: GraphStore, candidate_id: str, outcome: str,
+                         expected_revision: int) -> dict:
+    """Read-only single-claim scenario. No authoritative verdict is changed.
+
+    Rejection is evaluated against the conservative graph; confirmation against
+    the confirmed-only graph. Every scratch graph is unique and deleted after
+    use. All resulting certificates are labelled hypothetical.
+    """
+    if outcome not in {"confirmed", "rejected"}:
+        raise ValueError("A counterfactual outcome must be confirmed or rejected.")
+    if store.revision() != expected_revision:
+        raise RevisionConflict("Evidence changed before the planner scenario.")
+    records, candidates = store.records(), store.candidates()
+    found = [c for c in candidates if c["id"] == candidate_id]
+    if len(found) != 1 or found[0]["status"] != "unresolved":
+        raise ValueError("A planner scenario requires one currently unresolved candidate.")
+    candidates = [{**c, "status": outcome} if c["id"] == candidate_id else c for c in candidates]
+    result = _solve_snapshot(store, records, candidates, outcome == "rejected", expected_revision)
+    return {**result, "hypothetical": True,
+            "scenario": {"candidate_id": candidate_id, "assumed_status": outcome},
+            "warning": "Counterfactual only: not an evidence verdict or an exportable repair."}
+
+
+def _solve_snapshot(store: GraphStore, records: list[dict], candidates: list[dict],
+                    conservative: bool, revision: int) -> dict:
     started = time.perf_counter()
     capability = store.capabilities()
     if not capability["native_maxflow"]:
         raise NativeAlgorithmUnavailable("This FalkorDB instance does not support algo.maxFlow. Install the verified native module using scripts/probe_engine.py --install-native-module or configure a capable external server. reference_solve is a separate benchmark, never a fallback.")
-    revision = store.revision()
-    records, candidates = store.records(), store.candidates()
     by_id, conflicts, sentinel = _inputs(records, candidates, conservative)
     engine = "falkordb-native-maxflow"
     common = {"engine": engine, "native_procedure": "algo.maxFlow", "module_version": capability["module_version_text"], "revision": revision, "conservative": conservative}

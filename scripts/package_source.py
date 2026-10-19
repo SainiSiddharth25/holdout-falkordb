@@ -9,7 +9,7 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 TOP_FILES = {"README.md", "LICENSE", "pyproject.toml", "requirements-lock.txt", "Dockerfile", "compose.yaml", ".gitignore", ".dockerignore", ".env.example"}
-SOURCE_DIRS = {"holdout", "fixtures", "dist", "examples", "tests", "scripts", "docs"}
+SOURCE_DIRS = {"holdout", "fixtures", "dist", "examples", "tests", "scripts", "docs", "watch-inputs"}
 
 
 def main() -> None:

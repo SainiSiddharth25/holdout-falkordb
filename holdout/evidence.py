@@ -10,8 +10,11 @@ import ast
 import copy
 import hashlib
 import json
+import sys
 from pathlib import Path
 from typing import Any
+
+from .policies import separation_policy
 
 
 MAX_ARTIFACT_BYTES = 256 * 1024
@@ -64,6 +67,7 @@ def load_fixture(path: str | Path | None = None) -> dict[str, Any]:
     if not isinstance(fixture, dict) or not isinstance(fixture.get("records"), list):
         raise EvidenceError("Fixture must contain a records list.")
     fixture["_root"] = str(root)
+    separation_policy(fixture)  # Validate without changing legacy catalog fingerprints.
     for key in ("entities", "links", "candidates"):
         if not isinstance(fixture.setdefault(key, []), list):
             raise EvidenceError(f"Fixture {key} must be a list.")
@@ -234,7 +238,10 @@ def _normalized(node: ast.AST) -> str | None:
         arg.arg = bindings[arg.arg]
     # Defaults, decorators and annotations are evaluated outside this local body.
     clone.body = [RenameBody().visit(statement) for statement in clone.body]
-    return ast.dump(clone, annotate_fields=True, include_attributes=False)
+    # Python 3.13 changed ast.dump's default empty-field serialization. Keep
+    # the Docker/Python 3.12 comparison fingerprint stable for receipt replay.
+    options = {"show_empty": True} if sys.version_info >= (3, 13) else {}
+    return ast.dump(clone, annotate_fields=True, include_attributes=False, **options)
 
 
 def compare_records(fixture: dict[str, Any], train_id: str, eval_id: str, method: str = "exact") -> dict[str, Any]:

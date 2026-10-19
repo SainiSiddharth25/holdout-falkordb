@@ -164,7 +164,102 @@ class GraphStore:
                 self._query(f"UNWIND $rows AS row MATCH (s:Entity {{id:row.source}}),(t:Entity {{id:row.target}}) CREATE (s)-[:{relation} {{data:row.data}}]->(t)", {"rows": rows})
         if candidates:
             self._query("UNWIND $rows AS row MATCH (t:Record {id:row.train_id}),(e:Record {id:row.eval_id}) CREATE (c:Candidate {id:row.id,status:row.status,data:row.data}), (c)-[:TRAIN]->(t),(c)-[:EVAL]->(e)", {"rows": [{**c, "data": _json(c)} for c in candidates]})
-        self._query("MATCH (m:ReleaseMeta {id:'release'}) SET m.revision=1,m.fixture_id=$id,m.title=$title", {"id": fixture.get("id", ""), "title": fixture.get("title", "")})
+        self._query("MATCH (m:ReleaseMeta {id:'release'}) SET m.revision=1,m.fixture_id=$id,m.title=$title,m.separation_policy=$policy", {"id": fixture.get("id", ""), "title": fixture.get("title", ""), "policy": fixture.get("policy", {}).get("separation_policy", "answer_leakage")})
+
+    # Stage 4: task ownership lives in FalkorDB rather than in worker memory.
+    # Task transitions are single Cypher write queries with lease/token guards.
+    def initialize_tasks(self) -> None:
+        self._query("""MATCH (c:Candidate)
+            MERGE (t:InvestigationTask {id:c.id})
+            ON CREATE SET t.state=CASE WHEN c.status='unresolved' THEN 'pending' ELSE 'done' END,
+                          t.role='code',t.owner='',t.token='',t.lease_until=0,
+                          t.attempts=0,t.handoffs=0
+            MERGE (t)-[:FOR_CANDIDATE]->(c)""")
+
+    def tasks(self) -> list[dict]:
+        rows = self._query("""MATCH (t:InvestigationTask)-[:FOR_CANDIDATE]->(c:Candidate)
+            RETURN t.id,t.state,t.role,t.owner,t.lease_until,t.attempts,t.handoffs,c.status
+            ORDER BY t.id""")
+        return [dict(id=r[0],state=r[1],role=r[2],owner=r[3] or None,
+                     lease_until_ms=int(r[4] or 0),attempts=int(r[5] or 0),
+                     handoffs=int(r[6] or 0),verdict=r[7]) for r in rows]
+
+    def task(self, candidate_id: str) -> dict:
+        result = [t for t in self.tasks() if t['id'] == candidate_id]
+        if not result:
+            raise KeyError(candidate_id)
+        return result[0]
+
+    def claim_task(self, role: str, owner: str, lease_seconds: int = 60) -> dict | None:
+        if role not in {'code','provenance'} or not re.fullmatch(r'[A-Za-z0-9_-]{1,64}', owner):
+            raise ValueError('Invalid investigator role or owner.')
+        if type(lease_seconds) is not int or not 5 <= lease_seconds <= 300:
+            raise ValueError('Lease must be 5–300 seconds.')
+        now = int(time.time() * 1000)
+        # A new random fencing token replaces every expired claim. No worker
+        # can complete, hand off or investigate using the old token.
+        token = uuid4().hex
+        rows = self._query("""MATCH (t:InvestigationTask)-[:FOR_CANDIDATE]->(c:Candidate)
+            WHERE t.role=$role AND c.status='unresolved' AND
+                  (t.state='pending' OR (t.state='leased' AND t.lease_until < $now))
+            WITH t ORDER BY t.id LIMIT 1
+            SET t.state='leased',t.owner=$owner,t.token=$token,
+                t.lease_until=$until,t.attempts=t.attempts+1
+            RETURN t.id,t.role,t.attempts""",
+            {'role':role,'owner':owner,'token':token,'now':now,'until':now + lease_seconds * 1000})
+        if not rows:
+            return None
+        return {'candidate_id':rows[0][0], 'role':rows[0][1],
+                'attempt':int(rows[0][2]),'lease_token':token,'owner':owner,
+                'lease_until_ms':now + lease_seconds * 1000}
+
+    def require_claim(self, candidate_id: str, token: str | None) -> None:
+        rows = self._query("""MATCH (t:InvestigationTask {id:$id})
+            RETURN t.state,t.token,t.lease_until""", {'id':candidate_id})
+        if not rows:
+            raise KeyError(candidate_id)
+        state, active, expiry = rows[0]
+        now = int(time.time() * 1000)
+        if state == 'leased' and int(expiry) >= now:
+            if not token or token != active:
+                raise RevisionConflict('Candidate is held by another investigator; provide the current claim token.')
+        elif token:
+            raise RevisionConflict('Investigator claim expired or was superseded.')
+
+    def transition_task(self, candidate_id: str, token: str, *, handoff_role: str | None = None) -> dict:
+        if not isinstance(token,str) or not re.fullmatch(r'[0-9a-f]{32}',token):
+            raise RevisionConflict('A valid active claim token is required.')
+        if handoff_role is not None and handoff_role not in {'code','provenance'}:
+            raise ValueError('Unknown handoff role.')
+        now=int(time.time()*1000)
+        rows=self._query("""MATCH (t:InvestigationTask {id:$id})
+            WHERE t.state='leased' AND t.token=$token AND t.lease_until >= $now
+            SET t.state=$state,t.role=coalesce($role,t.role),t.owner='',t.token='',
+                t.lease_until=0,t.handoffs=t.handoffs+$handoff
+            RETURN t.id,t.state,t.role,t.handoffs""",
+            {'id':candidate_id,'token':token,'now':now,'role':handoff_role,
+             'state':'pending' if handoff_role else 'done',
+             'handoff':1 if handoff_role else 0})
+        if not rows:
+            raise RevisionConflict('Task claim was lost, expired or already completed.')
+        return {'candidate_id':rows[0][0],'state':rows[0][1],
+                'role':rows[0][2], 'handoffs':int(rows[0][3])}
+
+    def reconcile_tasks(self, decisions: dict[str,dict], candidate_id: str | None = None) -> None:
+        """Use replayed evidence to rebuild unfinished queue after a restart.
+
+        Leases/handoffs are ephemeral; only checked evidence persists. Do not
+        assert that unverified task execution survived a crash.
+        """
+        for item in self.tasks():
+            if candidate_id is not None and item['id'] != candidate_id:
+                continue
+            choice = decisions[item['id']]
+            state = 'done' if choice['done'] else 'pending'
+            role = choice['role']
+            self._query("""MATCH (t:InvestigationTask {id:$id})
+                SET t.state=$state,t.role=$role,t.owner='',t.token='',t.lease_until=0""",
+                {'id':item['id'],'state':state,'role':role})
 
     def records(self) -> list[dict]:
         return [json.loads(row[0]) for row in self._query("MATCH (r:Record) RETURN r.record_data ORDER BY r.id")]
@@ -201,6 +296,42 @@ class GraphStore:
             links.update({_json(e): e for e in ls})
             paths.append({"nodes": [n["id"] for n in ns], "relations": [e["relation"] for e in ls]})
         return {"nodes": list(nodes.values()), "links": list(links.values()), "paths": paths, "revision": self.revision()}
+
+    def upsert_memories(self, records: list[dict]) -> None:
+        """Store versioned, receipt-linked memories in FalkorDB, not JSON-side state.
+
+        Only service-derived memory records are accepted. A saved memory never
+        affects the revision or repairs; it is read-only investigation context.
+        """
+        if not records:
+            return
+        if len(records) > 100 or any(r.get('kind') not in {'episodic', 'semantic', 'procedural'} for r in records):
+            raise ValueError('Invalid memory batch.')
+        # Resolve candidate in the graph so a memory cannot be attached to a
+        # nonexistent hypothesis. Binding data is validated again on retrieval.
+        rows = [{'id': m['id'], 'candidate_id': m['candidate_id'],
+                 'receipt_id': m['binding']['evidence_sha256'], 'kind': m['kind'],
+                 'data': _json(m)} for m in records]
+        self._query("""UNWIND $rows AS row
+            MATCH (c:Candidate {id:row.candidate_id})
+            MERGE (r:EvidenceReceipt {id:row.receipt_id})
+            MERGE (m:Memory {id:row.id})
+            ON CREATE SET m.kind=row.kind,m.data=row.data
+            MERGE (m)-[:ABOUT]->(c)
+            MERGE (m)-[:SUPPORTED_BY]->(r)""", {'rows': rows})
+
+    def memories(self, candidate_id: str | None = None, kind: str | None = None,
+                 limit: int = 200) -> list[dict]:
+        if kind is not None and kind not in {'episodic', 'semantic', 'procedural'}:
+            raise ValueError('Unknown memory kind.')
+        if type(limit) is not int or not 1 <= limit <= 500:
+            raise ValueError('Memory limit must be 1–500.')
+        rows = self._query("""MATCH (m:Memory)-[:ABOUT]->(c:Candidate)
+            WHERE ($candidate IS NULL OR c.id=$candidate)
+              AND ($kind IS NULL OR m.kind=$kind)
+            RETURN m.data ORDER BY c.id,m.kind,m.id LIMIT 500""",
+            {'candidate': candidate_id, 'kind': kind})
+        return [json.loads(row[0]) for row in rows[:limit]]
 
     def add_event(self, event: dict) -> None:
         value = {"id": uuid4().hex, "recorded_at_ns": time.time_ns(), **event}

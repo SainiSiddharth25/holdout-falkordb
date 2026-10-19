@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "holdout-lab"
-version = "0.1.0"
-description = "Investigate AI dataset leakage and compute evidence-backed minimum-cost repairs in FalkorDB."
+version = "0.7.0"
+description = "Graph-backed collaborative investigators, evidence memory and investigation of AI dataset leakage and compute evidence-backed minimum-cost repairs in FalkorDB."
 requires-python = ">=3.12"
 dependencies = [
   "falkordb==1.8.0",
@@ -18,6 +18,7 @@ dependencies = [
 
 [project.optional-dependencies]
 test = ["pytest==9.1.1", "networkx==3.7"]
+parquet = ["pyarrow==21.0.0"]
 
 [project.scripts]
 holdout = "holdout.cli:main"

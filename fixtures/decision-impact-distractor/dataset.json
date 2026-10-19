@@ -1,0 +1,197 @@
+{
+  "id": "sentinel-decision-impact-distractor-v1",
+  "title": "Decision impact with an expensive zero-impact claim",
+  "description": "Self-authored controlled graph-sensitivity case. Predeclared costs; evidence verdicts are not supplied.",
+  "policy": {
+    "id": "decision-impact-answer-v1",
+    "separation_policy": "answer_leakage"
+  },
+  "records": [
+    {
+      "id": "tA",
+      "split": "train",
+      "cost": 2,
+      "protected": false,
+      "title": "tA",
+      "content_path": "records/tA.py",
+      "content_role": "solution_bundle",
+      "solution_symbols": [
+        "clip",
+        "square"
+      ]
+    },
+    {
+      "id": "tB",
+      "split": "train",
+      "cost": 10,
+      "protected": false,
+      "title": "tB",
+      "content_path": "records/tB.py",
+      "content_role": "solution_bundle",
+      "solution_symbols": [
+        "square"
+      ]
+    },
+    {
+      "id": "tC",
+      "split": "train",
+      "cost": 50,
+      "protected": true,
+      "title": "tC",
+      "content_path": "records/tC.py",
+      "content_role": "explanation",
+      "solution_symbols": []
+    },
+    {
+      "id": "eX",
+      "split": "eval",
+      "cost": 10,
+      "protected": false,
+      "title": "eX",
+      "content_path": "records/eX.py",
+      "content_role": "solution_bundle",
+      "solution_symbols": [
+        "clip"
+      ]
+    },
+    {
+      "id": "eY",
+      "split": "eval",
+      "cost": 1,
+      "protected": false,
+      "title": "eY",
+      "content_path": "records/eY.py",
+      "content_role": "solution_bundle",
+      "solution_symbols": [
+        "square"
+      ]
+    },
+    {
+      "id": "tD",
+      "split": "train",
+      "cost": 20,
+      "protected": false,
+      "title": "tD",
+      "content_path": "records/tD.py",
+      "content_role": "solution_bundle",
+      "solution_symbols": [
+        "normalize_label"
+      ]
+    },
+    {
+      "id": "tE",
+      "split": "train",
+      "cost": 20,
+      "protected": false,
+      "title": "tE",
+      "content_path": "records/tE.py",
+      "content_role": "solution_bundle",
+      "solution_symbols": [
+        "normalize_label"
+      ]
+    },
+    {
+      "id": "eW",
+      "split": "eval",
+      "cost": 20,
+      "protected": false,
+      "title": "eW",
+      "content_path": "records/eW.py",
+      "content_role": "solution_bundle",
+      "solution_symbols": [
+        "normalize_label"
+      ]
+    }
+  ],
+  "entities": [
+    {
+      "id": "scaffold",
+      "kind": "scaffold",
+      "path": "sources/scaffold.py"
+    },
+    {
+      "id": "missing",
+      "kind": "source_reference"
+    }
+  ],
+  "links": [
+    {
+      "source": "tB",
+      "target": "scaffold",
+      "relation": "USES_SCAFFOLD"
+    },
+    {
+      "source": "eX",
+      "target": "scaffold",
+      "relation": "USES_SCAFFOLD"
+    },
+    {
+      "source": "tC",
+      "target": "missing",
+      "relation": "DERIVED_FROM"
+    },
+    {
+      "source": "eY",
+      "target": "missing",
+      "relation": "DERIVED_FROM"
+    }
+  ],
+  "candidates": [
+    {
+      "id": "a-x",
+      "train_id": "tA",
+      "eval_id": "eX",
+      "status": "unresolved",
+      "basis": "content_retrieval",
+      "hint": "Investigate this supplied hypothesis against captured evidence."
+    },
+    {
+      "id": "a-y",
+      "train_id": "tA",
+      "eval_id": "eY",
+      "status": "unresolved",
+      "basis": "content_retrieval",
+      "hint": "Investigate this supplied hypothesis against captured evidence."
+    },
+    {
+      "id": "b-y",
+      "train_id": "tB",
+      "eval_id": "eY",
+      "status": "unresolved",
+      "basis": "content_retrieval",
+      "hint": "Investigate this supplied hypothesis against captured evidence."
+    },
+    {
+      "id": "high",
+      "train_id": "tB",
+      "eval_id": "eX",
+      "status": "unresolved",
+      "basis": "shared_scaffold",
+      "hint": "Investigate this supplied hypothesis against captured evidence."
+    },
+    {
+      "id": "redundant",
+      "train_id": "tC",
+      "eval_id": "eY",
+      "status": "unresolved",
+      "basis": "source_retrieval",
+      "hint": "Investigate this supplied hypothesis against captured evidence."
+    },
+    {
+      "id": "d-w",
+      "train_id": "tD",
+      "eval_id": "eW",
+      "status": "unresolved",
+      "basis": "content_retrieval",
+      "hint": "Inspect the captured answer to assess this hypothesis."
+    },
+    {
+      "id": "e-w",
+      "train_id": "tE",
+      "eval_id": "eW",
+      "status": "unresolved",
+      "basis": "content_retrieval",
+      "hint": "Inspect the captured answer to assess this hypothesis."
+    }
+  ]
+}

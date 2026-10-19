@@ -45,6 +45,9 @@ class ProtocolService:
             raise ValueError("Depth outside bounded provenance range")
         return {"record_id": record_id, "max_depth": max_depth, "paths": []}
 
+    def candidate_summaries(self):
+        return self.store.candidates()
+
     def investigate(self, candidate_id, method, expected_revision):
         if candidate_id != "candidate-1":
             raise KeyError("Unknown candidate")
@@ -71,11 +74,11 @@ def test_real_mcp_initialization_catalog_and_domain_roundtrip():
         async with local_client(service) as client:
             catalog = await client.list_tools()
             names = {tool.name for tool in catalog.tools}
-            assert names == {"release_status", "list_candidates", "inspect_record", "trace_provenance", "investigate_candidate", "solve_release", "stage_release"}
+            assert names == {"release_status", "plan_investigation", "list_candidates", "inspect_record", "trace_provenance", "investigate_candidate", "solve_release", "stage_release"}
             investigation = next(tool for tool in catalog.tools if tool.name == "investigate_candidate")
             # SDK 2.3 uses snake_case attributes and camelCase on the MCP wire.
             assert investigation.input_schema["properties"]["candidate_id"]["type"] == "string"
-            assert set(investigation.input_schema["properties"]["method"]["enum"]) == {"auto", "exact", "normalized_ast", "provenance"}
+            assert set(investigation.input_schema["properties"]["method"]["enum"]) == {"auto", "record_identity", "exact", "normalized_ast", "provenance"}
             assert "verdict" not in investigation.input_schema["properties"]
             assert investigation.model_dump(by_alias=True)["inputSchema"] == investigation.input_schema
 

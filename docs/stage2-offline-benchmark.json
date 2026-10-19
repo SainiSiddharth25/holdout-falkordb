@@ -1,0 +1,486 @@
+{
+  "test_only": true,
+  "model_calls": 0,
+  "mcp_used": false,
+  "backend": "TEST-ONLY NetworkX adapter",
+  "scope": "Controlled sensitivity regressions, not a real-corpus quality study. Priming work is identical and excluded from the measured continuation. Scenario work is explicitly counted. No average-case performance or LLM benefit claim.",
+  "cases": [
+    {
+      "fixture": "decision-impact",
+      "budget": 1,
+      "results": [
+        {
+          "strategy": "graph_guided",
+          "batch_budget": 1,
+          "investigation_order": [
+            "high"
+          ],
+          "batches_used": 1,
+          "evidence_methods": 4,
+          "scenario_solves": 4,
+          "wall_seconds": 0.013858,
+          "before": {
+            "lower": 3,
+            "upper": 11,
+            "gap": 8
+          },
+          "after": {
+            "lower": 3,
+            "upper": 3,
+            "gap": 0
+          },
+          "verified": true,
+          "engine": {
+            "native_maxflow": true,
+            "module_version_text": "TEST-ONLY-NetworkX-adapter",
+            "test_double": true
+          },
+          "unresolved": 1
+        },
+        {
+          "strategy": "endpoint_with_gap_stop",
+          "batch_budget": 1,
+          "investigation_order": [
+            "high"
+          ],
+          "batches_used": 1,
+          "evidence_methods": 4,
+          "scenario_solves": 0,
+          "wall_seconds": 0.010039,
+          "before": {
+            "lower": 3,
+            "upper": 11,
+            "gap": 8
+          },
+          "after": {
+            "lower": 3,
+            "upper": 3,
+            "gap": 0
+          },
+          "verified": true,
+          "engine": {
+            "native_maxflow": true,
+            "module_version_text": "TEST-ONLY-NetworkX-adapter",
+            "test_double": true
+          },
+          "unresolved": 1
+        },
+        {
+          "strategy": "catalog_with_gap_stop",
+          "batch_budget": 1,
+          "investigation_order": [
+            "high"
+          ],
+          "batches_used": 1,
+          "evidence_methods": 4,
+          "scenario_solves": 0,
+          "wall_seconds": 0.010166,
+          "before": {
+            "lower": 3,
+            "upper": 11,
+            "gap": 8
+          },
+          "after": {
+            "lower": 3,
+            "upper": 3,
+            "gap": 0
+          },
+          "verified": true,
+          "engine": {
+            "native_maxflow": true,
+            "module_version_text": "TEST-ONLY-NetworkX-adapter",
+            "test_double": true
+          },
+          "unresolved": 1
+        },
+        {
+          "strategy": "endpoint_exhaustive",
+          "batch_budget": 1,
+          "investigation_order": [
+            "high"
+          ],
+          "batches_used": 1,
+          "evidence_methods": 4,
+          "scenario_solves": 0,
+          "wall_seconds": 0.009749,
+          "before": {
+            "lower": 3,
+            "upper": 11,
+            "gap": 8
+          },
+          "after": {
+            "lower": 3,
+            "upper": 3,
+            "gap": 0
+          },
+          "verified": true,
+          "engine": {
+            "native_maxflow": true,
+            "module_version_text": "TEST-ONLY-NetworkX-adapter",
+            "test_double": true
+          },
+          "unresolved": 1
+        }
+      ]
+    },
+    {
+      "fixture": "decision-impact",
+      "budget": 3,
+      "results": [
+        {
+          "strategy": "graph_guided",
+          "batch_budget": 3,
+          "investigation_order": [
+            "high"
+          ],
+          "batches_used": 1,
+          "evidence_methods": 4,
+          "scenario_solves": 4,
+          "wall_seconds": 0.012531,
+          "before": {
+            "lower": 3,
+            "upper": 11,
+            "gap": 8
+          },
+          "after": {
+            "lower": 3,
+            "upper": 3,
+            "gap": 0
+          },
+          "verified": true,
+          "engine": {
+            "native_maxflow": true,
+            "module_version_text": "TEST-ONLY-NetworkX-adapter",
+            "test_double": true
+          },
+          "unresolved": 1
+        },
+        {
+          "strategy": "endpoint_with_gap_stop",
+          "batch_budget": 3,
+          "investigation_order": [
+            "high"
+          ],
+          "batches_used": 1,
+          "evidence_methods": 4,
+          "scenario_solves": 0,
+          "wall_seconds": 0.012636,
+          "before": {
+            "lower": 3,
+            "upper": 11,
+            "gap": 8
+          },
+          "after": {
+            "lower": 3,
+            "upper": 3,
+            "gap": 0
+          },
+          "verified": true,
+          "engine": {
+            "native_maxflow": true,
+            "module_version_text": "TEST-ONLY-NetworkX-adapter",
+            "test_double": true
+          },
+          "unresolved": 1
+        },
+        {
+          "strategy": "catalog_with_gap_stop",
+          "batch_budget": 3,
+          "investigation_order": [
+            "high"
+          ],
+          "batches_used": 1,
+          "evidence_methods": 4,
+          "scenario_solves": 0,
+          "wall_seconds": 0.009938,
+          "before": {
+            "lower": 3,
+            "upper": 11,
+            "gap": 8
+          },
+          "after": {
+            "lower": 3,
+            "upper": 3,
+            "gap": 0
+          },
+          "verified": true,
+          "engine": {
+            "native_maxflow": true,
+            "module_version_text": "TEST-ONLY-NetworkX-adapter",
+            "test_double": true
+          },
+          "unresolved": 1
+        },
+        {
+          "strategy": "endpoint_exhaustive",
+          "batch_budget": 3,
+          "investigation_order": [
+            "high",
+            "redundant"
+          ],
+          "batches_used": 2,
+          "evidence_methods": 6,
+          "scenario_solves": 0,
+          "wall_seconds": 0.013367,
+          "before": {
+            "lower": 3,
+            "upper": 11,
+            "gap": 8
+          },
+          "after": {
+            "lower": 3,
+            "upper": 3,
+            "gap": 0
+          },
+          "verified": true,
+          "engine": {
+            "native_maxflow": true,
+            "module_version_text": "TEST-ONLY-NetworkX-adapter",
+            "test_double": true
+          },
+          "unresolved": 1
+        }
+      ]
+    },
+    {
+      "fixture": "decision-impact-distractor",
+      "budget": 1,
+      "results": [
+        {
+          "strategy": "graph_guided",
+          "batch_budget": 1,
+          "investigation_order": [
+            "high"
+          ],
+          "batches_used": 1,
+          "evidence_methods": 4,
+          "scenario_solves": 6,
+          "wall_seconds": 0.016397,
+          "before": {
+            "lower": 23,
+            "upper": 31,
+            "gap": 8
+          },
+          "after": {
+            "lower": 23,
+            "upper": 23,
+            "gap": 0
+          },
+          "verified": true,
+          "engine": {
+            "native_maxflow": true,
+            "module_version_text": "TEST-ONLY-NetworkX-adapter",
+            "test_double": true
+          },
+          "unresolved": 2
+        },
+        {
+          "strategy": "endpoint_with_gap_stop",
+          "batch_budget": 1,
+          "investigation_order": [
+            "e-w"
+          ],
+          "batches_used": 1,
+          "evidence_methods": 2,
+          "scenario_solves": 0,
+          "wall_seconds": 0.007988,
+          "before": {
+            "lower": 23,
+            "upper": 31,
+            "gap": 8
+          },
+          "after": {
+            "lower": 23,
+            "upper": 31,
+            "gap": 8
+          },
+          "verified": true,
+          "engine": {
+            "native_maxflow": true,
+            "module_version_text": "TEST-ONLY-NetworkX-adapter",
+            "test_double": true
+          },
+          "unresolved": 2
+        },
+        {
+          "strategy": "catalog_with_gap_stop",
+          "batch_budget": 1,
+          "investigation_order": [
+            "e-w"
+          ],
+          "batches_used": 1,
+          "evidence_methods": 2,
+          "scenario_solves": 0,
+          "wall_seconds": 0.007187,
+          "before": {
+            "lower": 23,
+            "upper": 31,
+            "gap": 8
+          },
+          "after": {
+            "lower": 23,
+            "upper": 31,
+            "gap": 8
+          },
+          "verified": true,
+          "engine": {
+            "native_maxflow": true,
+            "module_version_text": "TEST-ONLY-NetworkX-adapter",
+            "test_double": true
+          },
+          "unresolved": 2
+        },
+        {
+          "strategy": "endpoint_exhaustive",
+          "batch_budget": 1,
+          "investigation_order": [
+            "e-w"
+          ],
+          "batches_used": 1,
+          "evidence_methods": 2,
+          "scenario_solves": 0,
+          "wall_seconds": 0.00785,
+          "before": {
+            "lower": 23,
+            "upper": 31,
+            "gap": 8
+          },
+          "after": {
+            "lower": 23,
+            "upper": 31,
+            "gap": 8
+          },
+          "verified": true,
+          "engine": {
+            "native_maxflow": true,
+            "module_version_text": "TEST-ONLY-NetworkX-adapter",
+            "test_double": true
+          },
+          "unresolved": 2
+        }
+      ]
+    },
+    {
+      "fixture": "decision-impact-distractor",
+      "budget": 3,
+      "results": [
+        {
+          "strategy": "graph_guided",
+          "batch_budget": 3,
+          "investigation_order": [
+            "high"
+          ],
+          "batches_used": 1,
+          "evidence_methods": 4,
+          "scenario_solves": 6,
+          "wall_seconds": 0.017173,
+          "before": {
+            "lower": 23,
+            "upper": 31,
+            "gap": 8
+          },
+          "after": {
+            "lower": 23,
+            "upper": 23,
+            "gap": 0
+          },
+          "verified": true,
+          "engine": {
+            "native_maxflow": true,
+            "module_version_text": "TEST-ONLY-NetworkX-adapter",
+            "test_double": true
+          },
+          "unresolved": 2
+        },
+        {
+          "strategy": "endpoint_with_gap_stop",
+          "batch_budget": 3,
+          "investigation_order": [
+            "e-w",
+            "high"
+          ],
+          "batches_used": 2,
+          "evidence_methods": 6,
+          "scenario_solves": 0,
+          "wall_seconds": 0.016979,
+          "before": {
+            "lower": 23,
+            "upper": 31,
+            "gap": 8
+          },
+          "after": {
+            "lower": 23,
+            "upper": 23,
+            "gap": 0
+          },
+          "verified": true,
+          "engine": {
+            "native_maxflow": true,
+            "module_version_text": "TEST-ONLY-NetworkX-adapter",
+            "test_double": true
+          },
+          "unresolved": 1
+        },
+        {
+          "strategy": "catalog_with_gap_stop",
+          "batch_budget": 3,
+          "investigation_order": [
+            "e-w",
+            "high"
+          ],
+          "batches_used": 2,
+          "evidence_methods": 6,
+          "scenario_solves": 0,
+          "wall_seconds": 0.015024,
+          "before": {
+            "lower": 23,
+            "upper": 31,
+            "gap": 8
+          },
+          "after": {
+            "lower": 23,
+            "upper": 23,
+            "gap": 0
+          },
+          "verified": true,
+          "engine": {
+            "native_maxflow": true,
+            "module_version_text": "TEST-ONLY-NetworkX-adapter",
+            "test_double": true
+          },
+          "unresolved": 1
+        },
+        {
+          "strategy": "endpoint_exhaustive",
+          "batch_budget": 3,
+          "investigation_order": [
+            "e-w",
+            "high",
+            "redundant"
+          ],
+          "batches_used": 3,
+          "evidence_methods": 8,
+          "scenario_solves": 0,
+          "wall_seconds": 0.017554,
+          "before": {
+            "lower": 23,
+            "upper": 31,
+            "gap": 8
+          },
+          "after": {
+            "lower": 23,
+            "upper": 23,
+            "gap": 0
+          },
+          "verified": true,
+          "engine": {
+            "native_maxflow": true,
+            "module_version_text": "TEST-ONLY-NetworkX-adapter",
+            "test_double": true
+          },
+          "unresolved": 1
+        }
+      ]
+    }
+  ]
+}

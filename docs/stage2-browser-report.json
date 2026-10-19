@@ -1,0 +1,17 @@
+{
+  "test_only": true,
+  "checks": [
+    "Live agent remains first primary action; deterministic baseline secondary",
+    "No counterfeit precomputed priorities or report",
+    "8-unit counterfactual saving displayed separately from evidence; report enabled",
+    "Partial coverage is visible, never presented as global-best ranking",
+    "Real evidence action invalidates old priorities and report",
+    "Finite equality says cost stable, without changing unknown verdicts",
+    "Guided control, per-split release review and verified output render",
+    "390px mobile view has no page-wide horizontal overflow"
+  ],
+  "page_errors": [],
+  "native_falkordb": false,
+  "real_mcp": false,
+  "provider_requests": 0
+}

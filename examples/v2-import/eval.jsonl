@@ -1,0 +1,2 @@
+{"id":"eval-X","title":"Rename-equivalent boundary problem","content":"def limit(value, bottom, top):\n    return max(bottom, min(value, top))\n","source_id":"public-task-44"}
+{"id":"eval-Y","title":"Same declared source, different answer","content":"def triple(value):\n    return value * 3\n","source_id":"shared-tutorial","protected":true}

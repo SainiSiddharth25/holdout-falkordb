@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f5f5ef">
   <meta name="description" content="HOLDOUT investigates dataset provenance and repairs candidate training and evaluation splits with an evidence-backed graph cut.">
-  <title>HOLDOUT — Dataset release review</title>
+  <title>HOLDOUT Sentinel — Continuous integrity</title>
   <link rel="stylesheet" href="./styles.css">
   <script src="./app.js" defer></script>
 </head>
@@ -13,7 +13,7 @@
   <a class="skip" href="#main">Skip to release review</a>
   <header class="topbar">
     <a class="brand" href="#main" aria-label="HOLDOUT home"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 5h8v8H5zM19 19h8v8h-8z" fill="currentColor"/><path d="M19 5h8v8h-8zM5 19h8v8H5z" fill="none" stroke="currentColor" stroke-width="2"/><path d="m13 9 6 14m-6 0 6-14" stroke="currentColor" stroke-width="1.7"/></svg><span>HOLDOUT<span class="brand-period">.</span></span></a>
-    <nav class="nav" aria-label="Primary"><a href="#graph-section" class="active">Release review</a><a href="#investigation">Investigation</a><a href="#release-section">Manifests</a></nav>
+    <nav class="nav" aria-label="Primary"><a href="#graph-section" class="active">Release review</a><a href="#planning-section">Planner</a><a href="#memory-section">Memory</a><a href="#investigation">Investigation</a><a href="#release-section">Manifests</a></nav>
     <div class="top-end"><span id="connection-badge" class="badge muted"><span class="dot"></span>Connecting</span><button id="about-button" class="icon-button" aria-label="How HOLDOUT works">?</button></div>
   </header>
 
@@ -21,7 +21,7 @@
     <div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
     <section class="page-heading" aria-labelledby="page-title">
       <div><div class="eyebrow"><span class="tiny-square"></span> Training × evaluation integrity</div><h1 id="page-title">Every example has a history.</h1><p id="project-description">Trace the evidence. Resolve the conflicts. Keep the most valuable data.</p></div>
-      <div class="heading-actions"><button id="run-button" class="button primary" disabled><span class="play-icon" aria-hidden="true">▶</span><span id="run-label">Run investigation</span></button><button id="llm-button" class="button secondary" hidden>Run live agent</button><button id="reset-button" class="icon-button" title="Reset this local run" aria-label="Reset this local run" hidden>↺</button></div>
+      <div class="heading-actions"><button id="llm-button" class="button primary" hidden><span class="play-icon" aria-hidden="true">▶</span>Run live agent</button><button id="run-button" class="button secondary" disabled><span id="run-label">Run deterministic policy</span></button><button id="reset-button" class="icon-button" title="Reset this local run" aria-label="Reset this local run" hidden>↺</button></div>
     </section>
 
     <section id="replay-strip" class="replay-strip" aria-label="Recorded run playback" hidden>
@@ -31,11 +31,46 @@
 
     <div class="release-context"><div><span class="context-label">CANDIDATE RELEASE</span><span id="release-title">Waiting for a run</span></div><span id="revision" class="mono subtle">—</span></div>
 
+    <section id="import-section" class="panel import-panel" aria-labelledby="import-title" hidden>
+      <div class="panel-heading"><div><div class="eyebrow small">00 / Connect your records</div><h2 id="import-title">Import a dataset release</h2></div><span class="badge muted">Local only</span></div>
+      <p class="panel-intro">Choose training and evaluation JSONL files. For Git-history snapshots or Parquet/CSV inputs, use the documented Stage 1 CLI first. HOLDOUT discovers candidate links and available source references, then assigns predeclared exclusion costs using the selected policy. No URLs are fetched. Live LLM investigations can transmit bounded source excerpts to your configured model provider. Supported local import size: 3 MiB per file; use <code>holdout prepare</code> for larger datasets or CSV.</p>
+      <div class="import-controls">
+        <label>Training JSONL <input id="train-file" type="file" accept=".jsonl,.json,application/json" /></label>
+        <label>Evaluation JSONL <input id="eval-file" type="file" accept=".jsonl,.json,application/json" /></label>
+        <label>Preservation policy
+          <select id="cost-policy"><option value="equal">Equal — 1 : 1</option><option value="balanced">Balanced — 2 : 5</option><option value="eval_first">Evaluation-first — 1 : 10</option><option value="train_first">Training-first — 8 : 3</option></select>
+        </label>
+        <label>Conflict policy
+          <select id="separation-policy" aria-describedby="separation-policy-help"><option value="answer_leakage">Answer-leakage separation</option><option value="exact_record">Exact-record separation</option></select>
+        </label>
+        <button class="button secondary" id="import-button">Import & discover candidates</button>
+      </div>
+      <p id="separation-policy-help" class="detail-note">Answer-leakage: bounded answer evidence is required. Identical boilerplate alone is insufficient. Cost weights are a separate choice. Changing either choice takes effect only on a new import.</p>
+      <p id="active-policy" class="active-policy" role="status"></p>
+      <div id="import-result" class="small-text subtle">Default synthetic fixture is loaded. Import creates a new independent snapshot; the current run will be replaced, not edited.</div>
+    </section>
+
     <section class="metrics" aria-label="Current release state">
       <div class="metric"><span class="metric-label">Training pool</span><div><strong id="train-count">—</strong><span>examples</span></div><span class="metric-note">Candidate training records</span></div>
       <div class="metric"><span class="metric-label">Evaluation pool</span><div><strong id="eval-count">—</strong><span>examples</span></div><span class="metric-note">Candidate evaluation records</span></div>
       <div class="metric"><span class="metric-label">Unresolved evidence</span><div><strong id="unresolved-count">—</strong><span id="candidate-total">relationships</span></div><span class="metric-note" id="resolution-note">Investigation changes the graph</span></div>
       <div class="metric bounds-metric"><span class="metric-label">Optimal exclusion cost <button class="tiny-help" id="bounds-help" aria-label="Explain exclusion cost bounds">?</button></span><div><strong id="bound-value">—</strong><span>cost units</span></div><span class="metric-note" id="bound-note">Known conflicts → all candidate conflicts</span></div>
+    </section>
+
+    <section id="planning-section" class="panel planning-panel" aria-labelledby="planning-title" hidden>
+      <div class="panel-heading"><div><div class="eyebrow small">Stage 2 / Make every investigation count</div><h2 id="planning-title">Which claim can change the repair?</h2></div><span id="plan-badge" class="badge muted">Not calculated</span></div>
+      <p class="panel-intro">FalkorDB solves two hypothetical branches per evaluated claim: reject it in the conservative graph, or confirm it in the lower-bound graph. Neither branch changes the evidence. Rank the possible cost effect, then investigate the actual source.</p>
+      <div class="planner-controls">
+        <label for="plan-cap">Maximum claims to score <input id="plan-cap" type="number" min="1" max="128" value="32" /></label>
+        <button id="plan-button" class="button secondary">Calculate priorities</button>
+        <button id="guided-button" class="button secondary">Run graph-guided <span class="small-text">No model key</span></button>
+        <button id="coordinated-button" class="button secondary">Run coordinated agents <span class="small-text">Two specialists · no key</span></button>
+        <button id="plan-download" class="text-button" disabled>Planning report + certificates ↓</button>
+      </div>
+      <div id="plan-status" class="planner-status" aria-live="polite">Calculate a plan to see certified cost sensitivity. Ordinary page refreshes do not run extra counterfactual solves.</div>
+      <div id="plan-results" class="planner-results"></div>
+      <details class="planner-explanation"><summary>How to read the ranking</summary><p><strong>Rejection saving</strong> is the possible drop in conservative cost if this one claim is rejected. <strong>Confirmation uplift</strong> is the possible increase in the confirmed-only lower bound if it is confirmed. The score is the larger effect divided by declared method-effort units, an uncalibrated proxy—not a probability, token estimate or financial value. An unavailable source cannot be invented.</p><p>Finite equal bounds prove the conservative repair remains cost-optimal under every resolution of the captured unknowns. A zero single-edge score or a partial scan proves neither independence nor irrelevance: several uncertainties can matter together. Equal-cost alternative repairs and split balance are outside this stopping guarantee.</p></details>
+      <div class="planner-example"><span>Controlled example: five records with declared costs and inspectable evidence. Loading it replaces the active run, not its saved files.</span><button id="decision-example" class="text-button">Load sensitivity example ↗</button></div>
     </section>
 
     <div class="workspace">
@@ -50,19 +85,59 @@
       <aside class="panel inspector-panel" aria-labelledby="inspector-title"><div class="panel-heading"><div><div class="eyebrow small">02 / Follow the evidence</div><h2 id="inspector-title">Evidence inspector</h2></div><span id="inspector-state" class="inspector-count">↗</span></div><div id="inspector" class="inspector-content"><div class="inspector-empty"><div class="inspect-glyph" aria-hidden="true">⌖</div><h3>The reason behind the edge.</h3><p>Select a relationship in the graph to inspect its source material, provenance, and investigation result.</p></div></div></aside>
     </div>
 
+    <section id="memory-section" class="panel memory-panel" aria-labelledby="memory-title">
+      <div class="panel-heading"><div><div class="eyebrow small">Stage 3 / Evidence-bound context</div><h2 id="memory-title">What the investigators remember</h2></div><span id="memory-badge" class="badge muted">No stored memories</span></div>
+      <p class="panel-intro">Verified investigation receipts become episodic, semantic, and procedural graph memories. Each note is checked against current evidence when recalled. Procedures only suggest methods; they never establish new verdicts. The model cannot author trusted evidence through this panel.</p>
+      <div class="memory-metrics" id="memory-metrics"><span>Investigate a candidate to record memory.</span></div>
+      <div class="memory-controls"><label for="memory-kind">Memory type</label><select id="memory-kind"><option value="">All types</option><option value="episodic">Episodic</option><option value="semantic">Semantic</option><option value="procedural">Procedural</option></select><button id="memory-load" class="button secondary">Recall evidence memories</button></div>
+      <div id="memory-results" class="memory-results" aria-live="polite"><p class="empty-message">Current verified memory summaries appear here on request.</p></div>
+    </section>
+
+    <section id="coordination-section" class="panel memory-panel" aria-labelledby="coordination-title">
+      <div class="panel-heading"><div><div class="eyebrow small">Stage 4 / Shared investigation tasks</div><h2 id="coordination-title">Two specialists, one evidence graph</h2></div><span id="coordination-badge" class="badge muted">No tasks</span></div>
+      <p class="panel-intro">The code-evidence and provenance investigators claim exclusive, expiring tasks in FalkorDB. Unresolved code findings are handed to provenance without copying verdicts. Failed claims can be safely retried; evidence is replayed after restart.</p>
+      <div id="coordination-summary" class="memory-metrics" aria-live="polite">Start a coordinated run to observe claimed work and handoffs.</div>
+      <div id="coordination-tasks" class="memory-results"></div>
+    </section>
+
+    <section id="organization-section" class="panel memory-panel" aria-labelledby="organization-title">
+      <div class="panel-heading"><div><div class="eyebrow small">Stage 5 / Connected research governance</div><h2 id="organization-title">Company Brain · Release governance</h2></div><span id="org-badge" class="badge muted">Not staged</span></div>
+      <p class="panel-intro">Synthetic research project and owners, evidence-linked policy decisions, and an approval route queried from FalkorDB. Technical verification does not imply organizational permission. Local reviewer actions are demo attestations, not authenticated approvals.</p>
+      <div id="org-project" class="memory-metrics">Organization graph available with a local backend.</div>
+      <div class="memory-controls org-controls">
+        <label for="org-policy">Governance policy</label><select id="org-policy" aria-label="Organization policy"></select>
+        <button class="button secondary" id="org-policy-apply">Apply policy</button>
+      </div>
+      <div id="org-gate" class="memory-results" aria-live="polite">Stage a verified release to inspect policy eligibility.</div>
+      <div class="memory-controls org-controls">
+        <label for="org-reviewer">Reviewer</label><select id="org-reviewer" aria-label="Synthetic reviewer"></select>
+        <button id="org-approve" class="button primary">Record demo approval</button>
+        <button id="org-reject" class="button secondary">Record rejection</button>
+      </div>
+      <details class="planner-explanation"><summary>Evidence trail: who owns which dataset, and why is this policy active?</summary><div id="org-source" class="memory-results"></div></details>
+    </section>
+
+    <section id="sentinel-section" class="panel memory-panel" aria-labelledby="sentinel-title">
+      <div class="panel-heading"><div><div class="eyebrow small">Stage 6 / Continuous source observation</div><h2 id="sentinel-title">Sentinel · Source change watch</h2></div><span id="sentinel-badge" class="badge muted">Not connected</span></div>
+      <p class="panel-intro">Local, bounded polling of <code>watch-inputs/train.jsonl</code> and <code>watch-inputs/eval.jsonl</code>. A changed snapshot is a <strong>proposal</strong>, not a new verdict or approved release. Source drift blocks further release actions on a watched active run until you explicitly promote new inputs.</p>
+      <div id="sentinel-summary" class="memory-metrics" aria-live="polite">Waiting for source watcher.</div>
+      <div class="memory-controls"><button id="sentinel-scan" class="button secondary">Check sources now</button><button id="sentinel-promote" class="button primary">Promote reviewed snapshot ↗</button><span class="small-text subtle">Promotion resets the active investigation; previous run artifacts remain in the history volume.</span></div>
+      <div id="sentinel-events" class="memory-results" aria-live="polite"></div>
+    </section>
+
     <section id="investigation" class="investigation-grid" aria-label="Investigation review">
       <div class="panel queue-panel"><div class="panel-heading"><div><div class="eyebrow small">03 / Resolve what matters</div><h2>Investigation queue</h2></div><span id="queue-badge" class="badge muted">— relationships</span></div><p class="panel-intro">Inspect evidence that can change the repair decision.</p><div id="candidate-list" class="candidate-list"><p class="empty-message">No candidate relationships loaded.</p></div></div>
       <div class="panel timeline-panel"><div class="panel-heading"><div><div class="eyebrow small">The execution record</div><h2>Agent activity</h2></div><span id="agent-status" class="badge muted">Idle</span></div><p id="agent-message" class="panel-intro">Tool calls and their observed results appear as the run progresses.</p><ol id="timeline" class="timeline"><li class="empty-message">No activity recorded.</li></ol></div>
     </section>
 
     <section id="release-section" class="panel release-panel" aria-labelledby="manifest-title">
-      <div class="release-main"><div class="eyebrow small">04 / Make the repair reviewable</div><h2 id="manifest-title">A release you can inspect.</h2><p id="release-summary">Stage candidate manifests after investigation. Verification checks the release against the evidence and declared retention policy.</p><div id="release-checks" class="release-checks"></div><div class="release-actions"><button id="release-button" class="button primary" disabled>Stage & verify release <span aria-hidden="true">↗</span></button><span id="release-state" class="small-text subtle">No release staged</span></div></div>
+      <div class="release-main"><div class="eyebrow small">04 / Make the repair reviewable</div><h2 id="manifest-title">A release you can inspect.</h2><p id="release-summary">Stage candidate manifests after investigation. Verification checks the release against the evidence and declared retention policy.</p><div id="release-review" class="release-review" aria-live="polite"></div><div id="release-checks" class="release-checks"></div><div class="release-actions"><button id="release-button" class="button primary" disabled>Stage & verify release <span aria-hidden="true">↗</span></button><span id="release-state" class="small-text subtle">No release staged</span></div></div>
       <div class="manifest-files"><div class="manifest-label">RELEASE ARTIFACTS</div><button class="file-row" data-download="train.jsonl" disabled><span class="file-icon">{ }</span><span><strong>train.jsonl</strong><small>Repaired training manifest</small></span><span class="download-icon" aria-hidden="true">↓</span></button><button class="file-row" data-download="eval.jsonl" disabled><span class="file-icon">{ }</span><span><strong>eval.jsonl</strong><small>Repaired evaluation manifest</small></span><span class="download-icon" aria-hidden="true">↓</span></button><button class="file-row" data-download="repair.json" disabled><span class="file-icon">{ }</span><span><strong>repair.json</strong><small>Decision, evidence & verification</small></span><span class="download-icon" aria-hidden="true">↓</span></button></div>
     </section>
-    <footer class="footer"><span><strong>HOLDOUT.</strong> Keep the signal. Fix the split.</span><a href="./downloads/holdout-source.zip" download>Download source &amp; setup</a><span>Cost reflects declared retention priorities, not model accuracy.</span></footer>
+    <footer class="footer"><span><strong>HOLDOUT.</strong> Keep the signal. Fix the split.</span><span>Stage 6 · Continuous Sentinel · docs/STAGE6_CONTINUOUS.md</span><span>Cost reflects declared retention priorities, not model accuracy.</span></footer>
   </main>
 
-  <dialog id="about-dialog"><button id="close-dialog" class="icon-button dialog-close" aria-label="Close explanation">×</button><div class="eyebrow">How the decision works</div><h2>Evidence becomes a repair.</h2><p>Each confirmed edge says that a training example and an evaluation example cannot both remain in this candidate release. HOLDOUT uses a weighted bipartite vertex cover, reduced to minimum cut, to choose exclusions with the lowest declared cost.</p><h3>Why there are two bounds</h3><p>The lower bound uses confirmed conflicts. The upper bound also treats every unresolved candidate relationship as a conflict. Investigation can close that gap. The guarantee applies to the compiled relationships and policy, not every possible undiscovered source of contamination.</p><h3>What the agent does</h3><p>The agent chooses investigations, follows source provenance, and records evidence. The optimizer computes the repair. A recorded replay displays captured results; it does not execute an agent or FalkorDB in your browser.</p><h3>Use your local backend</h3><p>Serve this interface from the HOLDOUT backend, then reload. Live controls become available when <code>/api/state</code> responds. See the project README for setup and start commands.</p><button id="dialog-done" class="button primary">Got it</button></dialog>
+  <dialog id="about-dialog"><button id="close-dialog" class="icon-button dialog-close" aria-label="Close explanation">×</button><div class="eyebrow">How the decision works</div><h2>Evidence becomes a repair.</h2><p>Each confirmed edge says that a training example and an evaluation example cannot both remain in this candidate release. HOLDOUT uses a weighted bipartite vertex cover, reduced to minimum cut, to choose exclusions with the lowest declared cost.</p><h3>Two conflict policies</h3><p>Answer-leakage separation requires bounded answer evidence; whole-file identity alone does not prove answer relevance. Exact-record separation only prohibits identical complete contents and does not promise to catch renamed answers. Choose the rule at import, independently of exclusion-cost weights.</p><h3>Why there are two bounds</h3><p>The lower bound uses confirmed conflicts. The upper bound also treats every unresolved candidate relationship as a conflict. Investigation can close that gap. The guarantee applies to the compiled relationships and policy, not every possible undiscovered source of contamination.</p><h3>What the agent does</h3><p>The agent chooses investigations, follows source provenance, and records evidence. The optimizer computes the repair. A recorded replay displays captured results; it does not execute an agent or FalkorDB in your browser.</p><h3>Use your local backend</h3><p>Serve this interface from the HOLDOUT backend, then reload. Live controls become available when <code>/api/state</code> responds. See the project README for setup and start commands.</p><button id="dialog-done" class="button primary">Got it</button></dialog>
   <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
 </body>
 </html>
